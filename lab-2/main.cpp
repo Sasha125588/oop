@@ -128,7 +128,8 @@ public:
 };
 
 namespace FractionScope {
-#include "Fraction.h"
+#include "Fraction.hpp"
+
 Fraction::Fraction() : Fraction(0) {}
 
 Fraction::Fraction(int numerator) : Fraction(numerator, 1) {}
@@ -138,14 +139,14 @@ Fraction::Fraction(int numerator, int denominator) {
   setDenominator(denominator);
 }
 
-Fraction &Fraction::reduce() {
-  int gcd = _gcd(numerator, denominator);
+Fraction& Fraction::reduce() {
+  int gcd = _gcd(abs(numerator), abs(denominator));
   numerator /= gcd;
   denominator /= gcd;
   return *this;
 }
 
-Fraction &Fraction::add(const Fraction &fraction) {
+Fraction& Fraction::add(const Fraction &fraction) {
   numerator =
       numerator * fraction.denominator + fraction.numerator * denominator;
   denominator = denominator * fraction.denominator;
@@ -153,33 +154,33 @@ Fraction &Fraction::add(const Fraction &fraction) {
   return *this;
 }
 
-Fraction &Fraction::add(int number) {
+Fraction& Fraction::add(int number) {
   Fraction fraction(number);
   add(fraction);
   return *this;
 }
 
-Fraction &Fraction::subtract(const Fraction &fraction) {
+Fraction& Fraction::subtract(const Fraction &fraction) {
   numerator = numerator * fraction.denominator - fraction.numerator * denominator;
   denominator = denominator * fraction.denominator;
   reduce();
   return *this;
 }
 
-Fraction &Fraction::multiply(const Fraction &fraction) {
+Fraction& Fraction::multiply(const Fraction &fraction) {
   numerator = numerator * fraction.numerator;
   denominator = denominator * fraction.denominator;
   reduce();
   return *this;
 }
 
-Fraction &Fraction::multiply(int number) {
+Fraction& Fraction::multiply(int number) {
   numerator *= number;
   reduce();
   return *this;
 }
 
-Fraction &Fraction::divide(const Fraction &fraction) {
+Fraction& Fraction::divide(const Fraction &fraction) {
   numerator = numerator * fraction.denominator;
   denominator = denominator * fraction.numerator;
   reduce();
@@ -191,9 +192,13 @@ inline bool Fraction::equals(const Fraction &fraction) {
 }
 
 void Fraction::print() const {
-  cout << numerator << "/" << denominator << endl;
+  if (denominator > 0) {
+    cout << numerator << "/" << denominator << endl;
+  } else {
+    cout << numerator << endl;
+  }
 }
-} // namespace FractionScope
+}
 
 int main() {
   // ======1======
@@ -310,16 +315,34 @@ void testFraction() {
   cout << "Single parameter (15): ";
   f2.print();
 
-  Fraction f3(10, 20); // two parameters
-  cout << "Two parameters (10/20): ";
+  cout << "Two parameters (10/-2): " << endl;
+  Fraction f3(10, -2); // two parameters
+
   f3.print();
 
   cout << "\n2. Testing reduction:" << endl;
-  cout << "Before reduction (10/20): ";
+  cout << "Before reduction (10/-2): ";
   f3.print();
   f3.reduce();
   cout << "After reduction: ";
   f3.print();
+
+  f3.add(1);
+  cout << "Add 1: ";
+  f3.print();
+
+  f3.subtract(2);
+  cout << "Subtract 2: ";
+  f3.print();
+
+  f3.multiply(3);
+  cout << "Multiply 3: ";
+  f3.print();
+
+  cout << "\n2. Testing division by zero(1/0):" << endl;
+  Fraction f4(1, 0);
+  cout << "Division by zero: ";
+  f4.print();
 
   cout << "\n3. Testing arithmetic operations:" << endl;
   Fraction a(1, 2); // 1/2
