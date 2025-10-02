@@ -46,6 +46,9 @@ class Array {
         delete[] arr;
     }
 
+    int getSize() const { return size; }
+    int getCapacity() const { return capacity; }
+
     void add(T value) {
         if(size >= capacity) {
             capacity *= 2;
@@ -160,9 +163,6 @@ class Array {
         cout << "└─────────────────────────────────────┘" << endl;
     }
 
-    int getSize() const { return size; }
-    int getCapacity() const { return capacity; }
-    
     T& operator[](int index) {
         if (index < 0 || index >= size) {
             throw out_of_range("Index out of bounds");
