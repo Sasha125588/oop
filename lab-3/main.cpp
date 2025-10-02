@@ -1,4 +1,5 @@
 #include "Array.hpp"
+#include "Person.cpp"
 #include <iostream>
 
 using namespace std;
@@ -6,48 +7,12 @@ using namespace std;
 void testPerson();
 void testArray();
 
-class Person {
-private:
-  string name;
-  string address;
-  short age;
-  string phoneNumber;
-
-public:
-  Person() = default;
-  Person(Person &other) {
-    name = other.name;
-    address = other.address;
-    age = other.age;
-    phoneNumber = other.phoneNumber;
-  }
-  explicit Person(const string &personName) {
-    name = personName;
-    address = "";
-    age = -1;
-    phoneNumber = "";
-  }
-
-  ~Person() { cout << "Person " << name << " destroyed" << endl; }
-
-  string getName() const { return name; }
-  void setName(string name) { this->name = name; }
-
-  string getAddress() const { return address; }
-  void setAddress(string address) { this->address = address; }
-
-  short getAge() const { return age; }
-  void setAge(short age) { this->age = age; }
-
-  string getPhoneNumber() const { return phoneNumber; }
-  void setPhoneNumber(string phoneNumber) { this->phoneNumber = phoneNumber; }
-};
-
 int main() {
+
   srand(time(0));
 
-  //   testPerson();
-  testArray();
+  testPerson();
+  // testArray();
 
   return 0;
 }

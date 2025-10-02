@@ -148,7 +148,7 @@ public:
     } else {
       for (int i = 0; i < size; i++) {
         cout << "│ [" << i << "] = " << arr[i];
-        // Добавляем пробелы для выравнивания
+        
         int spaces = 8 - to_string(arr[i]).length();
         for (int j = 0; j < spaces; j++) {
           cout << " ";
