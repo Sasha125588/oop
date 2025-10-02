@@ -1,7 +1,13 @@
 #include <iostream>
+#include "Array.hpp"
+#include <chrono>
+#include <thread>
+
 using namespace std;
 
 void testPerson();
+void testArray();
+
 
 class Person {
 private:
@@ -41,7 +47,10 @@ public:
 };
 
 int main() {
-  testPerson();
+    srand(time(0)); 
+
+//   testPerson();
+testArray();
 
   return 0;
 }
@@ -95,4 +104,31 @@ void testPerson() {
 
   cout << "=== Кінець демонстрації ===" << endl;
   cout << "Деструктори для p1, p2, p3, p4 викличуться при завершенні main()" << endl;
+}
+
+void testArray() {
+    Array<int> arr;
+
+    for(int i = 0; i < 12; i++) {
+        int value = (rand() % 200) + 1;
+        arr.add( value);
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        arr.printInfo();
+        arr.print();    
+    }
+
+    arr.add(500);
+
+    arr.sort(true);
+    arr.print();    
+
+    int min = arr.findMin();
+    cout << "Min = " << min << endl;
+
+    int max = arr.findMax();
+    cout << "Max = " << max << endl;
+
+
+    int indexOf = arr.indexOf(500);
+    cout << "indexOf = " << indexOf << endl;
 }
