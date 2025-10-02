@@ -46,8 +46,8 @@ class Array {
         delete[] arr;
     }
 
-    int getSize() const { return size; }
-    int getCapacity() const { return capacity; }
+    inline int getSize() const { return size; }
+    inline int getCapacity() const { return capacity; }
 
     void add(T value) {
         if(size >= capacity) {
@@ -110,15 +110,15 @@ class Array {
         }
     }
 
-    T findMin() {
+    inline T findMin() const {
         return *min_element(arr, arr + size);
     }
 
-    T findMax() {
-        return *max_element(arr, arr + size);;
+    inline T findMax() const {
+        return *max_element(arr, arr + size);
     }
 
-    int indexOf(T value) {
+    inline int indexOf(T value) const {
         int index = find(arr, arr + size, value) - arr;
         return index >= size ? -1 : index;
     }
@@ -163,14 +163,14 @@ class Array {
         cout << "└─────────────────────────────────────┘" << endl;
     }
 
-    T& operator[](int index) {
+    inline T& operator[](int index) {
         if (index < 0 || index >= size) {
             throw out_of_range("Index out of bounds");
         }
         return arr[index];
     }
     
-    const T& operator[](int index) const {
+    inline const T& operator[](int index) const {
         if (index < 0 || index >= size) {
             throw out_of_range("Index out of bounds");
         }
