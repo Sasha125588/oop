@@ -43,16 +43,6 @@ int main() {
   return 0;
 }
 
-map<char, Point> directions = {
-    {'w', Point(0, -1)}, // Вверх
-    {'s', Point(0, 1)},  // Вниз
-    {'a', Point(-1, 0)}, // Вліво
-    {'d', Point(1, 0)},  // Вправо
-
-};
-
-const Point &getDirection(char key) { return directions[key]; }
-
 void testThing() {
   Thing::putThing(1);
 
@@ -480,6 +470,7 @@ void oceanWithSeaweed() {
 
   char key;
   int moves = 0;
+
   while (true) {
     cout << "\nХід #" << ++moves << endl;
     player.displayFish();
@@ -499,7 +490,6 @@ void oceanWithSeaweed() {
     Point newPlayerPos = player.getCoordinates() + direction;
 
     player.moveToPosition(newPlayerPos);
-    player.decreaseHunger(5);
 
     cout << "\nОкеан після ходу:" << endl;
     Fish::displayOcean();
@@ -518,3 +508,13 @@ void oceanWithSeaweed() {
     }
   }
 };
+
+map<char, Point> directions = {
+  {'w', Point(0, -1)}, // Вверх
+  {'s', Point(0, 1)},  // Вниз
+  {'a', Point(-1, 0)}, // Вліво
+  {'d', Point(1, 0)},  // Вправо
+
+};
+
+const Point &getDirection(char key) { return directions[key]; }

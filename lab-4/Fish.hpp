@@ -12,6 +12,22 @@ private:
   Point coordinates = Point(0, 0);
   short health = 100;
 
+  inline bool isValidPosition(int x, int y) const {
+    return x >= 0 && x < 10 && y >= 0 && y < 10;
+  }
+
+  void removeFromOcean() const {
+    int x = coordinates.getX();
+    int y = coordinates.getY();
+
+    if (ocean[y][x] == 'F') {
+      ocean[y][x] = '~';
+      cout << "Риба " << (name.empty() ? "без імені" : name)
+           << " видалена з океану на позиції (" << x << ", " << y << ")"
+           << endl;
+    }
+  }
+
 public:
   static char ocean[10][10];
   static int countOfLiveFish;
@@ -48,7 +64,7 @@ public:
   ~Fish() { countOfLiveFish--; }
 
   const string &getName() const { return name; }
-  const void setName(string name) { this->name = name; }
+  void setName(string name) { this->name = name; }
 
   const Point &getCoordinates() const { return coordinates; }
   void setCoordinates(const Point &coords) { coordinates = coords; }
@@ -76,45 +92,40 @@ public:
     int x = coordinates.getX();
     int y = coordinates.getY();
 
-    if (x >= 0 && x < 10 && y >= 0 && y < 10) {
-      if (ocean[y][x] == '~' || ocean[y][x] == '*') {
-        if (ocean[y][x] == '*') {
-          feed(10);
-          cout << "Риба з'їла водорость! Ситість: " << health << endl;
-        }
-
-        ocean[y][x] = (name == "Акула" ? 'S' : 'F');
-        cout << "Риба " << (name.empty() ? "без імені" : name)
-             << " розміщена в океані на позиції (" << x << ", " << y << ")"
-             << endl;
-        return true;
-      } else {
-        cout << "Помилка: позиція (" << x << ", " << y << ") вже зайнята!"
-             << endl;
-        return false;
-      }
-    } else {
+    if (!isValidPosition(x, y)) {
       cout << "Помилка: координати (" << x << ", " << y
            << ") поза межами океану!" << endl;
       return false;
     }
-  }
 
-  void removeFromOcean() {
-    int x = coordinates.getX();
-    int y = coordinates.getY();
-
-    if (x >= 0 && x < 10 && y >= 0 && y < 10) {
-      if (ocean[y][x] == 'F') {
-        ocean[y][x] = '~';
-        cout << "Риба " << (name.empty() ? "без імені" : name)
-             << " видалена з океану на позиції (" << x << ", " << y << ")"
-             << endl;
+    if (ocean[y][x] == '~' || ocean[y][x] == '*') {
+      if (ocean[y][x] == '*') {
+        feed(10);
+        cout << "Риба з'їла водорость! Ситість: " << health << endl;
       }
+
+      ocean[y][x] = (name == "Акула" ? 'S' : 'F');
+      cout << "Риба " << (name.empty() ? "без імені" : name)
+           << " розміщена в океані на позиції (" << x << ", " << y << ")"
+           << endl;
+      return true;
+    } else {
+      cout << "Помилка: позиція (" << x << ", " << y << ") вже зайнята!"
+           << endl;
+      return false;
     }
   }
 
   bool moveToPosition(const Point &newPosition) {
+    int x = newPosition.getX();
+    int y = newPosition.getY();
+
+    if (!isValidPosition(x, y)) {
+      cout << "Помилка: координати (" << x << ", " << y
+           << ") поза межами океану!" << endl;
+      return false;
+    }
+
     Point oldPosition = coordinates;
 
     removeFromOcean();
@@ -126,6 +137,8 @@ public:
       placeInOcean();
       return false;
     }
+
+    decreaseHunger();
 
     return true;
   }
@@ -190,7 +203,7 @@ public:
 
     cout << "│ Ім'я: " << (name.empty() ? "Без імені" : name);
 
-    int spaces = 25 - name.length();
+    int spaces = 25 - (int)name.length();
     for (int i = 0; i < spaces; i++) {
       cout << " ";
     }
