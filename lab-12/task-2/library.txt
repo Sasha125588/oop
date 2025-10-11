@@ -1,0 +1,5 @@
+George Orwell|1984|1949|1
+George Orwell|Animal Farm (2nd Edition)|1945|1
+J.K. Rowling|Harry Potter and the Philosopher's Stone|1997|0
+J.R.R. Tolkien|The Hobbit|1937|1
+J.R.R. Tolkien|The Lord of the Rings|1954|1
