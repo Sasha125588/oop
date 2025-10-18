@@ -1,93 +1,91 @@
 #include <iostream>
 #include <map>
+#include "Fraction.hpp"
 using namespace std;
 
-namespace FractionScope
+Fraction::Fraction() : Fraction(0) {}
+
+Fraction::Fraction(int numerator) : Fraction(numerator, 1) {}
+
+Fraction::Fraction(int numerator, int denominator)
 {
-#include "Fraction.hpp"
+  this->numerator = numerator;
+  setDenominator(denominator);
+}
 
-  Fraction::Fraction() : Fraction(0) {}
+Fraction &Fraction::reduce()
+{
+  int gcd = _gcd(abs(numerator), abs(denominator));
+  numerator /= gcd;
+  denominator /= gcd;
+  return *this;
+}
 
-  Fraction::Fraction(int numerator) : Fraction(numerator, 1) {}
+Fraction &Fraction::add(const Fraction &fraction)
+{
+  numerator =
+      numerator * fraction.denominator + fraction.numerator * denominator;
+  denominator = denominator * fraction.denominator;
+  reduce();
+  return *this;
+}
 
-  Fraction::Fraction(int numerator, int denominator)
+Fraction &Fraction::add(int number)
+{
+  Fraction fraction(number);
+  add(fraction);
+  return *this;
+}
+
+Fraction &Fraction::subtract(const Fraction &fraction)
+{
+  numerator = numerator * fraction.denominator - fraction.numerator * denominator;
+  denominator = denominator * fraction.denominator;
+  reduce();
+  return *this;
+}
+
+Fraction &Fraction::multiply(const Fraction &fraction)
+{
+  numerator = numerator * fraction.numerator;
+  denominator = denominator * fraction.denominator;
+  reduce();
+  return *this;
+}
+
+Fraction &Fraction::multiply(int number)
+{
+  numerator *= number;
+  reduce();
+  return *this;
+}
+
+Fraction &Fraction::divide(const Fraction &fraction)
+{
+  numerator = numerator * fraction.denominator;
+  denominator = denominator * fraction.numerator;
+  reduce();
+  return *this;
+}
+
+inline bool Fraction::equals(const Fraction &fraction)
+{
+  return numerator == fraction.numerator && denominator == fraction.denominator;
+}
+
+void Fraction::print() const
+{
+  if (denominator > 0)
   {
-    this->numerator = numerator;
-    setDenominator(denominator);
+    cout << numerator << "/" << denominator << endl;
   }
-
-  Fraction &Fraction::reduce()
+  else
   {
-    int gcd = _gcd(abs(numerator), abs(denominator));
-    numerator /= gcd;
-    denominator /= gcd;
-    return *this;
-  }
-
-  Fraction &Fraction::add(const Fraction &fraction)
-  {
-    numerator =
-        numerator * fraction.denominator + fraction.numerator * denominator;
-    denominator = denominator * fraction.denominator;
-    reduce();
-    return *this;
-  }
-
-  Fraction &Fraction::add(int number)
-  {
-    Fraction fraction(number);
-    add(fraction);
-    return *this;
-  }
-
-  Fraction &Fraction::subtract(const Fraction &fraction)
-  {
-    numerator = numerator * fraction.denominator - fraction.numerator * denominator;
-    denominator = denominator * fraction.denominator;
-    reduce();
-    return *this;
-  }
-
-  Fraction &Fraction::multiply(const Fraction &fraction)
-  {
-    numerator = numerator * fraction.numerator;
-    denominator = denominator * fraction.denominator;
-    reduce();
-    return *this;
-  }
-
-  Fraction &Fraction::multiply(int number)
-  {
-    numerator *= number;
-    reduce();
-    return *this;
-  }
-
-  Fraction &Fraction::divide(const Fraction &fraction)
-  {
-    numerator = numerator * fraction.denominator;
-    denominator = denominator * fraction.numerator;
-    reduce();
-    return *this;
-  }
-
-  inline bool Fraction::equals(const Fraction &fraction)
-  {
-    return numerator == fraction.numerator && denominator == fraction.denominator;
-  }
-
-  void Fraction::print() const
-  {
-    if (denominator > 0)
-    {
-      cout << numerator << "/" << denominator << endl;
-    }
-    else
-    {
-      cout << numerator << endl;
-    }
+    cout << numerator << endl;
   }
 }
+
+void testFraction();
 
 int main()
 {
@@ -98,7 +96,6 @@ int main()
 
 void testFraction()
 {
-  using namespace FractionScope;
   cout << "\n=== Testing Fraction Class ===\n"
        << endl;
   cout << "1. Testing constructors:" << endl;
