@@ -72,41 +72,12 @@ public:
         return stats;
     }
 
-    const string& printStatsConst()
+    const string &printStatsConst()
     {
-        string* stats = new string("Year Model: " + to_string(yearModel) + "\nBrand: " + brand + "\nSpeed: " + to_string(speed) + "\nMax Speed: " + to_string(maxSpeed));
+        string *stats = new string("Year Model: " + to_string(yearModel) + "\nBrand: " + brand + "\nSpeed: " + to_string(speed) + "\nMax Speed: " + to_string(maxSpeed));
 
         return *stats;
     }
-};
-
-class Clock
-{
-private:
-    int hours = 15;
-    int minutes = 59;
-
-public:
-    void print24H()
-    {
-        cout << hours << ":" << minutes << endl;
-    };
-
-    void print12H()
-    {
-        cout << hours % 12 << ":" << minutes << endl;
-    };
-
-    void addMinute()
-    {
-        if (minutes + 1 == 60)
-        {
-            minutes = 0;
-            hours += 1;
-        }
-        else
-            minutes += 1;
-    };
 };
 
 int main()
@@ -131,12 +102,12 @@ int main()
     // 2 //
 
     auto start2 = chrono::high_resolution_clock::now();
-    
+
     for (int i = 0; i < 3000000; i++)
     {
         car.printStatsConst();
     }
-    
+
     auto end2 = chrono::high_resolution_clock::now();
 
     auto duration2 = chrono::duration_cast<chrono::milliseconds>(end2 - start2);
