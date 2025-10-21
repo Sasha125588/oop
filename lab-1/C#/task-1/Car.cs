@@ -20,20 +20,20 @@ namespace Task1
         }
         public string Brand { get; set; } = "Unknown";
 
-        private int _maxSpeed;
-        public int MaxSpeed
+        private double _maxSpeed = 200;
+        public double MaxSpeed
         {
             get => _maxSpeed;
             set
             {
-                _maxSpeed = Math.Max(0, value);
+                _maxSpeed = Math.Max(0.0, value);
                 if (_speed > _maxSpeed)
                     _speed = _maxSpeed;
             }
-        } = 200;
+        }
 
-        private int _speed;
-        public int Speed
+        private double _speed;
+        public double Speed
         {
             get => _speed;
             set
@@ -42,7 +42,7 @@ namespace Task1
                 {
                     throw new ArgumentException("Швидкість не може бути більше максимальної.");
                 }
-                _speed = Math.Max(0, value);
+                _speed = Math.Max(0.0, value);
             }
         }
 
