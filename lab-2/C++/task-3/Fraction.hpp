@@ -44,6 +44,6 @@ public:
   Fraction &multiply(const Fraction &fraction);
   Fraction &multiply(int number);
   Fraction &divide(const Fraction &fraction);
-  inline bool equals(const Fraction &fraction);
+  bool equals(const Fraction &fraction);
   void print() const;
 };

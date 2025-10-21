@@ -1,11 +1,21 @@
-#include <map>
 #include <iostream>
 
 using namespace std;
 
-map<int, string> monthNames{
-    {1, "January"}, {2, "February"}, {3, "March"}, {4, "April"}, {5, "May"}, {6, "June"}, {7, "July"}, {8, "August"}, {9, "September"}, {10, "October"}, {11, "November"}, {12, "December"}};
-
+static string monthNames[] = {
+    "січня",
+    "лютого",
+    "березня",
+    "квітня",
+    "травня",
+    "червня",
+    "липня",
+    "серпня",
+    "вересня",
+    "жовтня",
+    "листопада",
+    "грудня",
+};
 class Date
 {
 private:
@@ -13,12 +23,12 @@ private:
     int month;
     int year;
 
-    inline bool isLeapYear(int year)
+    static inline bool isLeapYear(int year)
     {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
-    int getDaysInMonth(int month, int year)
+    static int getDaysInMonth(int month, int year)
     {
         if (month < 1 || month > 12)
             return 0;
@@ -70,10 +80,10 @@ public:
     }
     void printDateMonthNameFull()
     {
-        cout << day << " " << monthNames[month] << ", " << year << endl;
+        cout << day << " " << monthNames[month - 1] << ", " << year << endl;
     }
     void printDateMonthNameShort()
     {
-        cout << day << " " << monthNames[month].substr(0, 3) << " " << year << endl;
+        cout << day << " " << monthNames[month - 1].substr(0, 3) << " " << year << endl;
     }
 };
