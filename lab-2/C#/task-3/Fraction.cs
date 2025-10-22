@@ -86,11 +86,12 @@ namespace Task3
 
         public Fraction Divide(Fraction other)
         {
-            if (other.Numerator == 0) throw new DivideByZeroException();
+            if (other.Numerator == 0)
+                throw new DivideByZeroException();
 
             Numerator *= other._denominator;
             _denominator *= other.Numerator;
-            
+
             return Reduce();
         }
 
