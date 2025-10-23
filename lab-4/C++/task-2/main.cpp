@@ -1,6 +1,5 @@
 #include "Fish.hpp"
 #include "../task-1/Point.hpp"
-#include <iomanip>
 #include <iostream>
 #include <map>
 
