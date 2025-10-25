@@ -12,7 +12,7 @@ private:
 
 public:
   Car(int year, string brand, double maxSpeed, double speed)
-  { // 4 parameters
+  {
     this->year = year;
     this->brand = brand;
     this->speed = speed;
@@ -20,7 +20,7 @@ public:
     cout << "Car created 4 parameters" << endl;
   };
   Car(int year, string brand, double maxSpeed)
-  { // 3 parameters
+  {
     this->year = year;
     this->brand = brand;
     this->speed = 0;
@@ -28,14 +28,14 @@ public:
     cout << "Car created 3 parameters" << endl;
   };
   Car(int year, string brand)
-  { // 2 parameters
+  {
     this->year = year;
     this->brand = brand;
     this->maxSpeed = 200;
     cout << "Car created 2 parameters" << endl;
   };
   Car()
-  { // 0 parameters
+  {
     cout << "Car created default" << endl;
   };
 

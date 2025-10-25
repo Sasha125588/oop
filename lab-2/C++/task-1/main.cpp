@@ -23,7 +23,6 @@ public:
   void Show() { cout << num << endl; }
 };
 
-
 int main()
 {
   //   Number a(12);
@@ -48,8 +47,11 @@ void testCar()
   cout << car1.printStats() << endl;
 
   cout << "\nTwo parameters (year, brand):" << endl;
-  Car car2(2020, "Toyota");
-  cout << car2.printStats() << endl;
+  
+  {
+    Car car2(2020, "Toyota");
+    cout << car2.printStats() << endl;
+  }
 
   cout << "\nThree parameters (year, brand, maxSpeed):" << endl;
   Car car3(2018, "Toyota", 200);

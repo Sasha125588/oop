@@ -1,13 +1,13 @@
 #pragma once
 
-enum TVStatus {
-    ON,
-    OFF
-};
+// enum TVStatus {
+//     ON,
+//     OFF
+// };
 
 class TV {
     private:
-    TVStatus status;
+    bool status;
     short channel;
     short channelsCount;
     short volume;
@@ -15,10 +15,10 @@ class TV {
 
     public:
     TV();
-    TV(TVStatus status, short channel, short channelsCount, short volume, short maxVolume);
+    TV(bool status, short channel, short channelsCount, short volume, short maxVolume);
 
-    TVStatus getStatus() const;
-    void setStatus(TVStatus status);
+    bool getStatus() const;
+    void setStatus(bool status);
     
     short getChannel() const;
     void setChannel(short channel);

@@ -98,7 +98,6 @@ int ParkingTicket::calculateFine() const {
     return fine;
 }
 
-// Display methods
 void ParkingTicket::displayCarInfo() const {
     cout << "┌─────────────────────────────────────────────────┐" << endl;
     cout << "│              VIOLATOR CAR INFO                  │" << endl;

@@ -65,8 +65,8 @@ void testTask1() {
             case 1: {
                 if (tv1 == nullptr || tv2 == nullptr) {
                     // Create two different TVs with different specifications
-                    tv1 = new TV(OFF, 1, 50, 5, 30);
-                    tv2 = new TV(OFF, 10, 100, 15, 50);
+                    tv1 = new TV(false, 1, 50, 5, 30);
+                    tv2 = new TV(false, 10, 100, 15, 50);
                     
                     cout << "\n✅ Successfully created two TVs:" << endl;
                     cout << "TV 1: 50 channels, max volume 30" << endl;

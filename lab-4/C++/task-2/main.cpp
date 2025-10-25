@@ -29,7 +29,7 @@ int Thing::z;
 char Point::lastNameOfPoint = ' ';
 int Point::count = 0;
 
-char Fish::ocean[10][10];
+char Fish::ocean[OCEAN_SIZE][OCEAN_SIZE];
 int Fish::countOfLiveFish = 0;
 
 int main()
@@ -73,7 +73,7 @@ void testFish()
 
   Fish fish4(Point(1, 9)); // Риба без імені (за замовчуванням)
 
-  cout << "\nСтворено " << Fish::countOfLiveFish << " риб" << endl;
+  cout << "\nСтворено " << Fish::getCountOFLiveFish() << " риб" << endl;
 
   // Показуємо інформацію про риб
   cout << "\n=== ІНФОРМАЦІЯ ПРО РИБ ===" << endl;
@@ -148,7 +148,7 @@ void testFish()
   Fish::displayOcean();
 
   cout << "\n=== ЗАВЕРШЕННЯ ТЕСТУВАННЯ ===" << endl;
-  cout << "Кількість живих риб: " << Fish::countOfLiveFish << endl;
+  cout << "Кількість живих риб: " << Fish::getCountOFLiveFish() << endl;
 }
 void oceanEscape()
 {
@@ -220,7 +220,7 @@ void oceanEscape()
     // Якщо прямий рух неможливий (клітинка зайнята), пробуємо рухатись в обхід
     if (newSharkPos.getX() >= 0 && newSharkPos.getX() < 10 &&
         newSharkPos.getY() >= 0 && newSharkPos.getY() < 10 &&
-        Fish::ocean[newSharkPos.getY()][newSharkPos.getX()] == 'S')
+        Fish::getOcean()[newSharkPos.getY()][newSharkPos.getX()] == 'S')
     {
 
       // Пробуємо рух тільки по X або тільки по Y
@@ -232,13 +232,13 @@ void oceanEscape()
 
       // Перевіряємо який з варіантів руху можливий
       if (posX.getX() >= 0 && posX.getX() < 10 && posX.getY() >= 0 &&
-          posX.getY() < 10 && Fish::ocean[posX.getY()][posX.getX()] != 'S')
+          posX.getY() < 10 && Fish::getOcean()[posX.getY()][posX.getX()] != 'S')
       {
         newSharkPos = posX;
       }
       else if (posY.getX() >= 0 && posY.getX() < 10 && posY.getY() >= 0 &&
                posY.getY() < 10 &&
-               Fish::ocean[posY.getY()][posY.getX()] != 'S')
+               Fish::getOcean()[posY.getY()][posY.getX()] != 'S')
       {
         newSharkPos = posY;
       }
@@ -255,10 +255,10 @@ void oceanEscape()
     bool surrounded = true;
 
     // Перевіряємо тільки основні напрямки: вгору, вниз, вліво, вправо
-    if ((py > 0 && Fish::ocean[py - 1][px] != 'S') || // вгору
-        (py < 9 && Fish::ocean[py + 1][px] != 'S') || // вниз
-        (px > 0 && Fish::ocean[py][px - 1] != 'S') || // вліво
-        (px < 9 && Fish::ocean[py][px + 1] != 'S'))
+    if ((py > 0 && Fish::getOcean()[py - 1][px] != 'S') || // вгору
+        (py < 9 && Fish::getOcean()[py + 1][px] != 'S') || // вниз
+        (px > 0 && Fish::getOcean()[py][px - 1] != 'S') || // вліво
+        (px < 9 && Fish::getOcean()[py][px + 1] != 'S'))
     { // вправо
       surrounded = false;
     }

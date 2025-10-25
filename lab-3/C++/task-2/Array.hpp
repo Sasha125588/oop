@@ -8,36 +8,69 @@
 
 using namespace std;
 
-template <typename T> class Array {
+template <typename T>
+class Array
+{
 private:
   T *arr;
   int size;
   int capacity;
 
+  void alloc(int newCapacity)
+  {
+    capacity = newCapacity;
+    T *newArr = new T[capacity];
+
+    for (int i = 0; i < size; i++)
+    {
+      newArr[i] = arr[i];
+    }
+
+    delete[] arr;
+    arr = newArr;
+  }
+
+  int getNewCapacity()
+  {
+    if (capacity == 0)
+      return 1;
+
+    if (capacity < 256)
+      return capacity * 2;
+
+    return (capacity * 1.25 + 3 * 256 / 4);
+  }
+
 public:
-  Array() {
+  Array()
+  {
     size = 10;
-    capacity = 10;
+    capacity = size;
     arr = new T[capacity]{0};
   }
-  Array(int size) {
+  Array(int size)
+  {
     this->size = size;
     capacity = size;
     arr = new T[capacity]{0};
   }
-  Array(int size, T value) {
+  Array(int size, T value)
+  {
     this->size = size;
     capacity = size;
     arr = new T[capacity];
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
       arr[i] = value;
     }
   }
-  Array(const Array &other) {
+  Array(const Array &other)
+  {
     size = other.size;
     capacity = other.capacity;
     arr = new T[capacity];
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
       arr[i] = other.arr[i];
     }
   }
@@ -47,51 +80,38 @@ public:
   inline int getSize() const { return size; }
   inline int getCapacity() const { return capacity; }
 
-  void add(T value) {
-    if (size >= capacity) {
-      capacity *= 2;
-      T *newArr = new T[capacity];
-
-      for (int i = 0; i < size; i++) {
-        newArr[i] = arr[i];
-      }
-
-      delete[] arr;
-      arr = newArr;
+  void add(T value)
+  {
+    if (size >= capacity)
+    {
+      alloc(getNewCapacity());
     }
     arr[size] = value;
     size++;
   }
 
-  void removeByIndex(int index) {
-    if (size == 0) {
-      throw out_of_range("Array is empty");
-    }
-    if (index < 0 || index >= size) {
-      throw out_of_range("Index out of bounds");
-    }
+  void removeByIndex(int index)
+  {
+    ensureValidIndex(index);
 
-    for (int i = index; i < size - 1; i++) {
+    for (int i = index; i < size - 1; i++)
+    {
       arr[i] = arr[i + 1];
     }
     size--;
 
-    if (size < capacity / 2 && capacity > 10) {
-      capacity /= 2;
-      T *newArr = new T[capacity];
-
-      for (int i = 0; i < size; i++) {
-        newArr[i] = arr[i];
-      }
-
-      delete[] arr;
-      arr = newArr;
+    if (size < capacity / 2 && capacity > 10)
+    {
+      alloc(capacity / 2);
     }
   }
 
-  bool removeByValue(T value) {
-    for (int i = 0; i < size; i++) {
-      if (arr[i] == value) {
+  bool removeByValue(T value)
+  {
+    for (int i = 0; i < size; i++)
+    {
+      if (arr[i] == value)
+      {
         removeByIndex(i);
         return true;
       }
@@ -99,58 +119,73 @@ public:
     return false;
   }
 
-  void sort(bool order) {
-    if (order) {
+  void sort(bool order)
+  {
+    if (order)
+    {
       std::sort(arr, arr + size, std::less<T>());
-    } else {
+    }
+    else
+    {
       std::sort(arr, arr + size, std::greater<T>());
     }
   }
 
-  inline T findMin() const {
-    if (size == 0) {
-      throw runtime_error("Array is empty");
-    }
+  inline T findMin() const
+  {
+    ensureNotEmpty();
+
     return *min_element(arr, arr + size);
   }
 
-  inline T findMax() const {
-    if (size == 0) {
-      throw runtime_error("Array is empty");
-    }
+  inline T findMax() const
+  {
+    ensureNotEmpty();
+
     return *max_element(arr, arr + size);
   }
 
-  inline int indexOf(T value) const {
+  inline int indexOf(T value) const
+  {
     int index = find(arr, arr + size, value) - arr;
     return index >= size ? -1 : index;
   }
 
-  void fill(T value) {
-    for (int i = 0; i < size; i++) {
+  void fill(T value)
+  {
+    for (int i = 0; i < size; i++)
+    {
       arr[i] = value;
     }
   }
 
-  void fillRandomValue() {
-    for (int i = 0; i < size; i++) {
+  void fillRandomValue()
+  {
+    for (int i = 0; i < size; i++)
+    {
       arr[i] = (rand() % 100) + 1;
     }
   }
 
-  void print() {
+  void print()
+  {
     cout << "┌─────────────────────────────────────┐" << endl;
     cout << "│              Array [" << size << "]              │" << endl;
     cout << "├─────────────────────────────────────┤" << endl;
 
-    if (size == 0) {
+    if (size == 0)
+    {
       cout << "│              (empty)              │" << endl;
-    } else {
-      for (int i = 0; i < size; i++) {
+    }
+    else
+    {
+      for (int i = 0; i < size; i++)
+      {
         cout << "│ [" << i << "] = " << arr[i];
-        
+
         int spaces = 8 - to_string(arr[i]).length();
-        for (int j = 0; j < spaces; j++) {
+        for (int j = 0; j < spaces; j++)
+        {
           cout << " ";
         }
         cout << "│" << endl;
@@ -160,7 +195,8 @@ public:
     cout << "└─────────────────────────────────────┘" << endl;
   }
 
-  void printInfo() {
+  void printInfo()
+  {
     cout << "┌─────────────────────────────────────┐" << endl;
     cout << "│            Array Info               │" << endl;
     cout << "├─────────────────────────────────────┤" << endl;
@@ -170,23 +206,31 @@ public:
     cout << "└─────────────────────────────────────┘" << endl;
   }
 
-  inline T &operator[](int index) {
-    if (size == 0) {
-      throw out_of_range("Array is empty");
-    }
-    if (index < 0 || index >= size) {
-      throw out_of_range("Index out of bounds");
-    }
+  inline T &operator[](int index)
+  {
+    ensureNotEmpty();
+    ensureValidIndex(index);
+
     return arr[index];
   }
 
-  inline const T &operator[](int index) const {
-    if (size == 0) {
-      throw out_of_range("Array is empty");
-    }
-    if (index < 0 || index >= size) {
-      throw out_of_range("Index out of bounds");
-    }
+  inline const T &operator[](int index) const
+  {
+    ensureNotEmpty();
+    ensureValidIndex(index);
+
     return arr[index];
+  }
+
+  void ensureNotEmpty() const
+  {
+    if (size == 0)
+      throw runtime_error("Array is empty");
+  }
+
+  void ensureValidIndex(int index) const
+  {
+    if (index < 0 || index >= size)
+      throw invalid_argument("Index out of bounds");
   }
 };

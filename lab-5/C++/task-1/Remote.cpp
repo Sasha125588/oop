@@ -1,9 +1,7 @@
 #include "Remote.hpp"
 #include "TV.hpp"
 
-Remote::Remote(TV* tv) {
-    this->tv = tv;
-}
+Remote::Remote(TV* tv): tv(tv) {}
 
 Remote::~Remote() {
     delete tv;

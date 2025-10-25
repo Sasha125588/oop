@@ -6,6 +6,10 @@
 
 using namespace std;
 
+const int OCEAN_SIZE = 10;
+const short MAX_HEALTH = 100;
+const short MOVE_HUNGER_COST = 5;
+
 class Fish
 {
 private:
@@ -15,7 +19,7 @@ private:
 
   inline bool isValidPosition(int x, int y) const
   {
-    return x >= 0 && x < 10 && y >= 0 && y < 10;
+    return x >= 0 && x < OCEAN_SIZE && y >= 0 && y < OCEAN_SIZE;
   }
 
   void removeFromOcean() const
@@ -32,48 +36,41 @@ private:
     }
   }
 
-public:
-  static char ocean[10][10];
+  static char ocean[OCEAN_SIZE][OCEAN_SIZE];
   static int countOfLiveFish;
-
+public:
   Fish() : health(100) { countOfLiveFish++; }
-  Fish(string name)
+  Fish(const string& name) : name(name), coordinates(0, 0), health(100) {
+    countOfLiveFish++;
+  }
+  Fish(short health): health(health)
   {
-    this->name = name;
     countOfLiveFish++;
   }
 
-  Fish(short health)
+  Fish(const Point &coordinates): coordinates(coordinates), health(100)
   {
-    this->health = health;
     countOfLiveFish++;
   }
 
-  Fish(const Point &coordinates)
+  Fish(const string& name, short health): name(name), health(health)
   {
-    this->coordinates = coordinates;
     countOfLiveFish++;
   }
 
-  Fish(string name, short health)
+  Fish(const string& name, short health, Point coordinates): name(name),
+      coordinates(coordinates), health(health)
   {
-    this->name = name;
-    this->health = health;
     countOfLiveFish++;
   }
 
-  Fish(string name, short health, Point coordinates)
-  {
-    this->name = name;
-    this->health = health;
-    this->coordinates = coordinates;
-    countOfLiveFish++;
-  }
-
-  ~Fish() { countOfLiveFish--; }
+  ~Fish() {
+    countOfLiveFish--;
+    removeFromOcean();
+}
 
   const string &getName() const { return name; }
-  void setName(string name) { this->name = name; }
+  void setName(const string& name) { this->name = name; }
 
   const Point &getCoordinates() const { return coordinates; }
   void setCoordinates(const Point &coords) { coordinates = coords; }
@@ -81,25 +78,40 @@ public:
   short getHealth() const { return health; }
   void setHealth(short newHealth)
   {
-    if (newHealth >= 0 && newHealth <= 100)
+    if (newHealth >= 0 && newHealth <= MAX_HEALTH)
     {
       health = newHealth;
     }
   }
 
+  static char (*getOcean())[OCEAN_SIZE] {
+    return ocean;
+  }
+
+  static int getCountOFLiveFish() {
+    return countOfLiveFish;
+  }
+
   void feed(int foodAmount)
   {
     health += foodAmount;
-    if (health > 100)
-      health = 100;
+    if (health > MAX_HEALTH)
+      health = MAX_HEALTH;
   }
 
   void decreaseHunger(int amount = 5)
   {
     health -= amount;
-    if (health < 0)
+    if (health <= 0) {
       health = 0;
+      die();
+    }
   }
+
+  void die() {
+    cout << "Риба " << name << " загинула від голоду! 💀" << endl;
+    removeFromOcean();
+}
 
   bool placeInOcean()
   {
@@ -171,16 +183,16 @@ public:
     cout << "│              ОКЕАН                  │" << endl;
     cout << "├─────────────────────────────────────┤" << endl;
     cout << "│   ";
-    for (int x = 0; x < 10; x++)
+    for (int x = 0; x < OCEAN_SIZE; x++)
     {
       cout << x << " ";
     }
     cout << "│" << endl;
 
-    for (int y = 0; y < 10; y++)
+    for (int y = 0; y < OCEAN_SIZE; y++)
     {
       cout << "│ " << y << " ";
-      for (int x = 0; x < 10; x++)
+      for (int x = 0; x < OCEAN_SIZE; x++)
       {
         cout << ocean[y][x] << " ";
       }
@@ -192,9 +204,9 @@ public:
 
   static void initializeOcean()
   {
-    for (int y = 0; y < 10; y++)
+    for (int y = 0; y < OCEAN_SIZE; y++)
     {
-      for (int x = 0; x < 10; x++)
+      for (int x = 0; x < OCEAN_SIZE; x++)
       {
         ocean[y][x] = '~';
       }
@@ -208,8 +220,8 @@ public:
     int placedSeaweed = 0;
     while (placedSeaweed < seaweedCount)
     {
-      int x = rand() % 10;
-      int y = rand() % 10;
+      int x = rand() % OCEAN_SIZE;
+      int y = rand() % OCEAN_SIZE;
 
       if (ocean[y][x] == '~')
       {
@@ -221,8 +233,8 @@ public:
 
   static void spawnSeaweed()
   {
-    int x = rand() % 10;
-    int y = rand() % 10;
+    int x = rand() % OCEAN_SIZE;
+    int y = rand() % OCEAN_SIZE;
 
     if (ocean[y][x] == '~')
     {
@@ -264,28 +276,22 @@ public:
     }
     cout << "] │" << endl;
 
-    cout << "│ Статус: ";
-    if (health >= 80)
-    {
-      cout << "Ситий та здоровий        │" << endl;
-    }
-    else if (health >= 60)
-    {
-      cout << "Добре нагодований        │" << endl;
-    }
-    else if (health >= 40)
-    {
-      cout << "Потребує їжі             │" << endl;
-    }
-    else if (health >= 20)
-    {
-      cout << "Голодний                 │" << endl;
-    }
-    else
-    {
-      cout << "Критично голодний!       │" << endl;
-    }
+    cout << "│ Статус: " << getFishStatus() << endl;
 
     cout << "└─────────────────────────────────────┘" << endl;
   }
+
+  string getFishStatus() const
+    {
+      if (health >= 80)
+        return "Ситий і задоволений 😊";
+      else if (health >= 60)
+        return "Нормально харчується 🙂";
+      else if (health >= 40)
+        return "Трохи голодний 😐";
+      else if (health >= 20)
+        return "Голодний 😟";
+      else
+        return "Дуже голодний! 😰";
+    }
 };

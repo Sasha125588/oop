@@ -2,7 +2,7 @@
 
 using namespace std;
 
-static string monthNames[] = {
+const string monthNames[] = {
     "січня",
     "лютого",
     "березня",
@@ -16,6 +16,7 @@ static string monthNames[] = {
     "листопада",
     "грудня",
 };
+
 class Date
 {
 private:

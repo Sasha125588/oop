@@ -5,14 +5,14 @@
 using namespace std;
 
 TV::TV() {
-    status = OFF;
+    status = false;
     maxVolume = 50;
     channelsCount = 100;
     channel = 1;
     volume = 10;
 }
 
-TV::TV(TVStatus status, short channel, short channelsCount, short volume, short maxVolume) {
+TV::TV(bool status, short channel, short channelsCount, short volume, short maxVolume) {
     this->status = status;
     this->channel = channel;
     this->channelsCount = channelsCount;
@@ -20,11 +20,11 @@ TV::TV(TVStatus status, short channel, short channelsCount, short volume, short 
     this->maxVolume = maxVolume;
 }
 
-TVStatus TV::getStatus() const {
+bool TV::getStatus() const {
     return status;
 }
 
-void TV::setStatus(TVStatus status) {
+void TV::setStatus(bool status) {
     this->status = status;
 }
 
@@ -57,7 +57,7 @@ short TV::getMaxVolume() const {
 }
 
 void TV::power() {
-    status = status == ON ? OFF : ON;
+    status = status ? false : true;
 }
 
 void TV::nextChannel() {
@@ -81,7 +81,7 @@ void TV::show() {
     cout << "│              TV INFO            │" << endl;
     cout << "├─────────────────────────────────┤" << endl;
     
-    if (status == ON) {
+    if (status == true) {
         cout << "│ Status:     ON                 │" << endl;
         cout << "│ Channel:    " << setw(3) << channel << "               │" << endl;
         cout << "│ Volume:     " << setw(3) << volume << "/" << setw(3) << maxVolume << "            │" << endl;

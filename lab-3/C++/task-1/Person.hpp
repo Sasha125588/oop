@@ -1,32 +1,27 @@
 #pragma once
-
-#include <iostream>
-
-using namespace std;
-
 class Person {
     private:
-      string name;
-      string address;
+      char* name;
+      char* address;
       short age;
-      string phoneNumber;
+      char* phoneNumber;
     
     public:
-      Person() = default;
-      Person(Person &other);
-      explicit Person(const string &personName);
+      Person();
+      Person(const Person &other);
+      explicit Person(const char* personName);
     
       ~Person();
     
-      string getName() const;
-      void setName(string name);
+      const char* getName() const;
+      void setName(const char* name);
     
-      string getAddress() const;
-      void setAddress(string address);
+      const char* getAddress() const;
+      void setAddress(const char* address);
     
       short getAge() const;
       void setAge(short age);
     
-      string getPhoneNumber() const;
-      void setPhoneNumber(string phoneNumber);
+      const char* getPhoneNumber() const;
+      void setPhoneNumber(const char* phoneNumber);
     };

@@ -24,43 +24,43 @@ void printSeparator(const string &title)
 
 void testArray()
 {
-  printSeparator("ТЕСТИРОВАНИЕ КЛАССА ARRAY");
+  printSeparator("ТЕСТУВАННЯ КЛАСУ ARRAY");
 
-  // Тест 1: Конструкторы
-  printSeparator("1. ТЕСТ КОНСТРУКТОРОВ");
+  // Тест 1: Конструктори
+  printSeparator("1. ТЕСТ КОНСТРУКТОРІВ");
 
-  cout << "Создание массива по умолчанию (capacity=10):" << endl;
+  cout << "Створення масиву за замовчуванням (capacity=10):" << endl;
   Array<int> arr1;
   arr1.printInfo();
 
-  cout << "\nСоздание массива с размером 5:" << endl;
+  cout << "\nСтворення масиву з розміром 5:" << endl;
   Array<int> arr2(5);
   arr2.printInfo();
 
-  cout << "\nСоздание массива с размером 3 и значением 42:" << endl;
+  cout << "\nСтворення масиву з розміром 3 і значенням 42:" << endl;
   Array<int> arr3(3, 42);
   arr3.print();
 
-  // Тест 2: Добавление элементов и изменение указателя
-  printSeparator("2. ТЕСТ ДОБАВЛЕНИЯ ЭЛЕМЕНТОВ И ИЗМЕНЕНИЯ УКАЗАТЕЛЯ");
+  // Тест 2: Додавання елементів і зміна вказівника
+  printSeparator("2. ТЕСТ ДОДАВАННЯ ЕЛЕМЕНТІВ І ЗМІНИ ВКАЗІВНИКА");
 
-  cout << "Добавление элементов в массив (capacity=10):" << endl;
+  cout << "Додавання елементів у масив (capacity=10):" << endl;
   Array<int> arr;
 
-  // Добавляем элементы до переполнения capacity
+  // Додаємо елементи до переповнення capacity
   for (int i = 1; i <= 12; i++)
   {
-    cout << "Добавляем элемент " << (i * 10) << ":" << endl;
+    cout << "Додаємо елемент " << (i * 10) << ":" << endl;
     arr.add(i * 10);
     arr.printInfo();
 
-    // Особое внимание к 11-му элементу (когда size > capacity)
+    // Особлива увага до 11-го елемента (коли size > capacity)
     if (i == 11)
     {
       cout << "┌─────────────────────────────────────┐" << endl;
-      cout << "│        ⚠️  ПЕРЕПОЛНЕНИЕ! ⚠️         │" << endl;
-      cout << "│   size > capacity, указатель       │" << endl;
-      cout << "│   изменился на новый адрес         │" << endl;
+      cout << "│        ⚠️  ПЕРЕПОВНЕННЯ! ⚠️        │" << endl;
+      cout << "│   size > capacity, вказівник       │" << endl;
+      cout << "│   змінився на нову адресу          │" << endl;
       cout << "└─────────────────────────────────────┘" << endl;
     }
 
@@ -68,86 +68,86 @@ void testArray()
     cout << endl;
   }
 
-  // Тест 3: Заполнение массива
-  printSeparator("3. ТЕСТ ЗАПОЛНЕНИЯ МАССИВА");
+  // Тест 3: Заповнення масиву
+  printSeparator("3. ТЕСТ ЗАПОВНЕННЯ МАСИВУ");
 
-  cout << "Заполнение массива значением 99:" << endl;
+  cout << "Заповнення масиву значенням 99:" << endl;
   arr.fill(99);
   arr.print();
 
-  cout << "\nЗаполнение случайными значениями:" << endl;
+  cout << "\nЗаповнення випадковими значеннями:" << endl;
   arr.fillRandomValue();
   arr.print();
 
-  // Тест 4: Сортировка
-  printSeparator("4. ТЕСТ СОРТИРОВКИ");
+  // Тест 4: Сортування
+  printSeparator("4. ТЕСТ СОРТУВАННЯ");
 
-  cout << "Исходный массив:" << endl;
+  cout << "Початковий масив:" << endl;
   arr.print();
 
-  cout << "\nСортировка по возрастанию:" << endl;
+  cout << "\nСортування за зростанням:" << endl;
   arr.sort(true);
   arr.print();
 
-  cout << "\nСортировка по убыванию:" << endl;
+  cout << "\nСортування за спаданням:" << endl;
   arr.sort(false);
   arr.print();
 
-  // Тест 5: Поиск минимума и максимума
-  printSeparator("5. ТЕСТ ПОИСКА МИНИМУМА И МАКСИМУМА");
+  // Тест 5: Пошук мінімуму і максимуму
+  printSeparator("5. ТЕСТ ПОШУКУ МІНІМУМУ І МАКСИМУМУ");
 
-  cout << "Массив для поиска:" << endl;
+  cout << "Масив для пошуку:" << endl;
   arr.print();
 
   int min = arr.findMin();
   int max = arr.findMax();
 
   cout << "┌─────────────────────────────────────┐" << endl;
-  cout << "│            РЕЗУЛЬТАТЫ               │" << endl;
+  cout << "│             РЕЗУЛЬТАТИ             │" << endl;
   cout << "├─────────────────────────────────────┤" << endl;
-  cout << "│ Минимальное значение: " << min << "           │" << endl;
-  cout << "│ Максимальное значение: " << max << "           │" << endl;
+  cout << "│ Мінімальне значення: " << min << "           │" << endl;
+  cout << "│ Максимальне значення: " << max << "          │" << endl;
   cout << "└─────────────────────────────────────┘" << endl;
 
-  // Тест 6: Поиск элемента
-  printSeparator("6. ТЕСТ ПОИСКА ЭЛЕМЕНТА");
+  // Тест 6: Пошук елемента
+  printSeparator("6. ТЕСТ ПОШУКУ ЕЛЕМЕНТА");
 
-  cout << "Массив для поиска:" << endl;
+  cout << "Масив для пошуку:" << endl;
   arr.print();
 
-  int searchValue = arr[arr.getSize() / 2]; // Берем элемент из середины
+  int searchValue = arr[arr.getSize() / 2]; // Беремо елемент із середини
   int index = arr.indexOf(searchValue);
 
   cout << "┌─────────────────────────────────────┐" << endl;
-  cout << "│            ПОИСК ЭЛЕМЕНТА            │" << endl;
+  cout << "│             ПОШУК ЕЛЕМЕНТА         │" << endl;
   cout << "├─────────────────────────────────────┤" << endl;
-  cout << "│ Ищем значение: " << searchValue << "               │" << endl;
-  cout << "│ Найден по индексу: " << index << "              │" << endl;
+  cout << "│ Шукаємо значення: " << searchValue << "              │" << endl;
+  cout << "│ Знайдено за індексом: " << index << "              │" << endl;
   cout << "└─────────────────────────────────────┘" << endl;
 
-  // Тест 7: Удаление элементов и уменьшение capacity
-  printSeparator("7. ТЕСТ УДАЛЕНИЯ ЭЛЕМЕНТОВ И УМЕНШЕНИЯ CAPACITY");
+  // Тест 7: Видалення елементів і зменшення capacity
+  printSeparator("7. ТЕСТ ВИДАЛЕННЯ ЕЛЕМЕНТІВ І ЗМЕНШЕННЯ CAPACITY");
 
-  cout << "Исходный массив:" << endl;
+  cout << "Початковий масив:" << endl;
   arr.printInfo();
   arr.print();
 
-  cout << "\nУдаление элементов до уменьшения capacity:" << endl;
+  cout << "\nВидалення елементів до зменшення capacity:" << endl;
   int initialCapacity = arr.getCapacity();
 
-  // Удаляем элементы до тех пор, пока capacity не уменьшится
+  // Видаляємо елементи, поки capacity не зменшиться
   while (arr.getSize() > 0 && arr.getCapacity() == initialCapacity)
   {
-    cout << "Удаляем элемент по индексу 0:" << endl;
+    cout << "Видаляємо елемент за індексом 0:" << endl;
     arr.removeByIndex(0);
     arr.printInfo();
 
     if (arr.getCapacity() < initialCapacity)
     {
       cout << "┌─────────────────────────────────────┐" << endl;
-      cout << "│        ⚠️  УМЕНШЕНИЕ! ⚠️          │" << endl;
-      cout << "│   capacity уменьшился, указатель   │" << endl;
-      cout << "│   изменился на новый адрес         │" << endl;
+      cout << "│        ⚠️  ЗМЕНШЕННЯ! ⚠️          │" << endl;
+      cout << "│   capacity зменшився, вказівник    │" << endl;
+      cout << "│   змінився на нову адресу          │" << endl;
       cout << "└─────────────────────────────────────┘" << endl;
     }
 
@@ -155,56 +155,56 @@ void testArray()
     cout << endl;
   }
 
-  cout << "\nУдаление элемента по значению " << arr[0] << ":" << endl;
+  cout << "\nВидалення елемента зі значенням " << arr[0] << ":" << endl;
   bool removed = arr.removeByValue(arr[0]);
   if (removed)
   {
-    cout << "Элемент успешно удален!" << endl;
+    cout << "Елемент успішно видалено!" << endl;
   }
   else
   {
-    cout << "Элемент не найден!" << endl;
+    cout << "Елемент не знайдено!" << endl;
   }
   arr.print();
 
-  // Тест 8: Конструктор копирования
-  printSeparator("8. ТЕСТ КОНСТРУКТОРА КОПИРОВАНИЯ");
+  // Тест 8: Конструктор копіювання
+  printSeparator("8. ТЕСТ КОНСТРУКТОРА КОПІЮВАННЯ");
 
-  cout << "Исходный массив:" << endl;
+  cout << "Початковий масив:" << endl;
   arr.print();
 
-  cout << "\nСоздание копии:" << endl;
+  cout << "\nСтворення копії:" << endl;
   Array<int> arrCopy(arr);
   arrCopy.print();
 
-  cout << "\nИзменение оригинала:" << endl;
+  cout << "\nЗміна оригіналу:" << endl;
   arr.add(999);
   arr.print();
 
-  cout << "\nКопия не изменилась:" << endl;
+  cout << "\nКопія не змінилась:" << endl;
   arrCopy.print();
 
-  // Тест 9: Оператор доступа
-  printSeparator("9. ТЕСТ ОПЕРАТОРА ДОСТУПА");
+  // Тест 9: Оператор доступу
+  printSeparator("9. ТЕСТ ОПЕРАТОРА ДОСТУПУ");
 
-  cout << "Массив:" << endl;
+  cout << "Масив:" << endl;
   arr.print();
 
-  cout << "\nДоступ к элементам через оператор []:" << endl;
+  cout << "\nДоступ до елементів через оператор []:" << endl;
   for (int i = 0; i < arr.getSize(); i++)
   {
     cout << "arr[" << i << "] = " << arr[i] << endl;
   }
 
-  // Тест 10: Итоговая информация
-  printSeparator("10. ИТОГОВАЯ ИНФОРМАЦИЯ");
+  // Тест 10: Підсумкова інформація
+  printSeparator("10. ПІДСУМКОВА ІНФОРМАЦІЯ");
 
-  cout << "Финальное состояние массива:" << endl;
+  cout << "Кінцевий стан масиву:" << endl;
   arr.printInfo();
   arr.print();
 
   cout << "\n"
        << string(60, '=') << endl;
-  cout << "  ВСЕ ТЕСТЫ ЗАВЕРШЕНЫ УСПЕШНО!" << endl;
+  cout << "  УСІ ТЕСТИ УСПІШНО ЗАВЕРШЕНІ!" << endl;
   cout << string(60, '=') << endl;
 }

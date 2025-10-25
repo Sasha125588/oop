@@ -5,40 +5,40 @@
 
 using namespace std;
 
-constexpr char names[] = {
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-};
-
 class Point {
 private:
   int x;
   int y;
-  char name;
+  char name = '@';
 
   static char lastNameOfPoint;
   static int count;
+
+  void assignName()
+  {
+    lastNameOfPoint++;
+    if (lastNameOfPoint > 'Z')
+      lastNameOfPoint = 'A';
+    name = lastNameOfPoint;
+  }
 
 public:
   Point(int x, int y) {
     this->x = x;
     this->y = y;
-    this->name = names[count];
-    lastNameOfPoint = this->name;
+    assignName();
     count++;
   };
   Point(const Point &other) {
     this->x = other.x;
     this->y = other.y;
-    this->name = names[count];
-    lastNameOfPoint = this->name;
+    assignName(); // в кожної точки має бути унікальне імʼя чи при копії імʼя теж копіюється?
     count++;
   };
   Point() {
     this->x = 0;
     this->y = 0;
-    this->name = names[count];
-    lastNameOfPoint = this->name;
+    assignName();
     count++;
   };
 
@@ -54,7 +54,10 @@ public:
 
   inline static int getCount() { return count; }
 
-  static void resetCount() { count = 0; }
+  static void resetCount() {
+    count = 0;
+    lastNameOfPoint = '@';
+  }
 
   double distanceToOrigin() const { return sqrt(x * x + y * y); }
 
@@ -100,7 +103,7 @@ public:
   }
 
   void printPoint() const {
-    cout << "Point " << count << ": " << this->name << "(" << this->x << ", "
+    cout << "Точка " << ": " << this->name << "(" << this->x << ", "
          << this->y << ")" << endl;
   };
 
@@ -108,17 +111,17 @@ public:
     cout << "Точка " << name << ": (" << x << ", " << y << ")" << endl;
   }
 
-  void displayAll(Point *points, int size) {
+  static void displayAll(Point *points, int size) {
     for (int i = 0; i < size; i++) {
       points[i].display();
     }
   }
 
   Point operator+(const Point &other) const {
-    return Point(x + other.x, y + other.y);;
+    return Point(x + other.x, y + other.y);
   }
 
   Point operator-(const Point &other) const {
-    return Point(x - other.x, y - other.y);;
+    return Point(x - other.x, y - other.y);
   }
 };

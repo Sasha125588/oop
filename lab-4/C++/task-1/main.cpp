@@ -1,13 +1,12 @@
 #include "Point.hpp"
 #include <iomanip>
 #include <iostream>
-#include <map>
 
 using namespace std;
 
 void testPoint();
 
-char Point::lastNameOfPoint = ' ';
+char Point::lastNameOfPoint = '@';
 int Point::count = 0;
 
 int main()
@@ -19,37 +18,37 @@ int main()
 
 void testPoint()
 {
-  cout << "=== Тестирование класса Point ===" << endl
+  cout << "=== Тестування класу Point ===" << endl
        << endl;
 
-  // Создание точек
+  // Створення точок
   Point point1(3, 4); // Точка A(3, 4)
   Point point2(1, 1); // Точка B(1, 1)
 
-  cout << "1. Создание точек:" << endl;
+  cout << "1. Створення точок:" << endl;
   point1.printPoint();
   point2.printPoint();
 
-  cout << "\n2. Вывод точек на экран:" << endl;
+  cout << "\n2. Виведення точок на екран:" << endl;
   point1.display();
   point2.display();
 
-  cout << "\n3. Вычисление расстояния до начала координат:" << endl;
+  cout << "\n3. Обчислення відстані до початку координат:" << endl;
   cout << fixed << setprecision(2);
-  cout << "Расстояние от точки " << point1.getName()
-       << " до начала координат: " << point1.distanceToOrigin() << endl;
-  cout << "Расстояние от точки " << point2.getName()
-       << " до начала координат: " << point2.distanceToOrigin() << endl;
+  cout << "Відстань від точки " << point1.getName()
+       << " до початку координат: " << point1.distanceToOrigin() << endl;
+  cout << "Відстань від точки " << point2.getName()
+       << " до початку координат: " << point2.distanceToOrigin() << endl;
 
-  cout << "\n4. Сложение двух точек:" << endl;
-  Point sum = point1 + point2; // Используем оператор + вместо метода add
+  cout << "\n4. Додавання двох точок:" << endl;
+  Point sum = point1 + point2; // Використовуємо оператор + замість методу add
   cout << "Точка " << point1.getName() << "(" << point1.getX() << ", "
        << point1.getY() << ") + ";
   cout << "Точка " << point2.getName() << "(" << point2.getX() << ", "
        << point2.getY() << ") = ";
   sum.display();
 
-  cout << "\n5. Вычитание двух точек:" << endl;
+  cout << "\n5. Віднімання двох точок:" << endl;
   Point diff = point1 - point2;
   cout << "Точка " << point1.getName() << "(" << point1.getX() << ", "
        << point1.getY() << ") - ";
@@ -57,7 +56,7 @@ void testPoint()
        << point2.getY() << ") = ";
   diff.display();
 
-  cout << "\n6. Дополнительные операции:" << endl;
+  cout << "\n6. Додаткові операції:" << endl;
   Point point3(5, 0); // Точка C(5, 0)
   Point point4(0, 3); // Точка D(0, 3)
 
@@ -65,160 +64,159 @@ void testPoint()
        << point3.getY() << ")" << endl;
   cout << "Точка " << point4.getName() << ": (" << point4.getX() << ", "
        << point4.getY() << ")" << endl;
-  cout << "Расстояние от C до начала координат: " << point3.distanceToOrigin()
+  cout << "Відстань від C до початку координат: " << point3.distanceToOrigin()
        << endl;
-  cout << "Расстояние от D до начала координат: " << point4.distanceToOrigin()
+  cout << "Відстань від D до початку координат: " << point4.distanceToOrigin()
        << endl;
 
   cout << "\nРезультат C + D:" << endl;
   Point result = point3.add(point4);
   result.display();
 
-  cout << "\n7. Сравнение точек по расстоянию до начала координат:" << endl;
+  cout << "\n7. Порівняння точок за відстанню до початку координат:" << endl;
 
-  Point point5(5, 5); // Точка E(5, 5) - расстояние ≈ 7.07
-  Point point6(3, 4); // Точка F(3, 4) - расстояние = 5.00
+  Point point5(5, 5); // Точка E(5, 5) - відстань ≈ 7.07
+  Point point6(3, 4); // Точка F(3, 4) - відстань = 5.00
 
   cout << "Точка " << point5.getName() << ": (" << point5.getX() << ", "
-       << point5.getY() << ") - расстояние до начала: " << fixed
+       << point5.getY() << ") - відстань до початку: " << fixed
        << setprecision(2) << point5.distanceToOrigin() << endl;
   cout << "Точка " << point6.getName() << ": (" << point6.getX() << ", "
        << point6.getY()
-       << ") - расстояние до начала: " << point6.distanceToOrigin() << endl;
+       << ") - відстань до початку: " << point6.distanceToOrigin() << endl;
 
   int comparison = Point::compareByDistance(point5, point6);
   if (comparison < 0)
   {
     cout << "Точка " << point5.getName()
-         << " ближе к началу координат, чем точка " << point6.getName()
-         << " (returned: " << comparison << ")" << endl;
+         << " ближче до початку координат, ніж точка " << point6.getName()
+         << " (повернуто: " << comparison << ")" << endl;
   }
   else if (comparison > 0)
   {
     cout << "Точка " << point5.getName()
-         << " дальше от начала координат, чем точка " << point6.getName()
-         << " (returned: " << comparison << ")" << endl;
+         << " далі від початку координат, ніж точка " << point6.getName()
+         << " (повернуто: " << comparison << ")" << endl;
   }
   else
   {
     cout
-        << "Точки " << point5.getName() << " и " << point6.getName()
-        << " находятся на одинаковом расстоянии от начала координат (returned: "
+        << "Точки " << point5.getName() << " і " << point6.getName()
+        << " знаходяться на однаковій відстані від початку координат (повернуто: "
         << comparison << ")" << endl;
   }
 
-  cout << "\n8. Дополнительное сравнение:" << endl;
-  Point point7(0, 6); // Точка G(0, 6) - расстояние = 6.0
+  cout << "\n8. Додаткове порівняння:" << endl;
+  Point point7(0, 6); // Точка G(0, 6) - відстань = 6.0
 
   cout << "Точка " << point7.getName() << ": (" << point7.getX() << ", "
        << point7.getY()
-       << ") - расстояние до начала: " << point7.distanceToOrigin() << endl;
+       << ") - відстань до початку: " << point7.distanceToOrigin() << endl;
 
   comparison = Point::compareByDistance(point7, point6);
   if (comparison < 0)
   {
     cout << "Точка " << point7.getName()
-         << " ближе к началу координат, чем точка " << point6.getName()
-         << " (returned: " << comparison << ")" << endl;
+         << " ближче до початку координат, ніж точка " << point6.getName()
+         << " (повернуто: " << comparison << ")" << endl;
   }
   else if (comparison > 0)
   {
     cout << "Точка " << point7.getName()
-         << " дальше от начала координат, чем точка " << point6.getName()
-         << " (returned: " << comparison << ")" << endl;
+         << " далі від початку координат, ніж точка " << point6.getName()
+         << " (повернуто: " << comparison << ")" << endl;
   }
   else
   {
     cout
-        << "Точки " << point7.getName() << " и " << point6.getName()
-        << " находятся на одинаковом расстоянии от начала координат (returned: "
+        << "Точки " << point7.getName() << " і " << point6.getName()
+        << " знаходяться на однаковій відстані від початку координат (повернуто: "
         << comparison << ")" << endl;
   }
 
-  // Сбрасываем счетчик перед созданием большого массива точек
-  cout << "\nСчетчик точек до сброса: " << Point::getCount() << endl;
+  // Скидаємо лічильник перед створенням великого масиву точок
+  cout << "\nЛічильник точок до скидання: " << Point::getCount() << endl;
   Point::resetCount();
-  cout << "Счетчик точек после сброса: " << Point::getCount() << endl;
+  cout << "Лічильник точок після скидання: " << Point::getCount() << endl;
 
-  cout << "\n9. Тестирование работы с массивом точек:" << endl;
+  cout << "\n9. Тестування роботи з масивом точок:" << endl;
 
-  // Создаем массив точек с разными координатами (используем инициализацию в
-  // списке)
+  // Створюємо масив точок із різними координатами (використовуємо список ініціалізації)
   Point pointArray[5] = {
-      Point(1, 1),  // A(1,1) - расстояние ≈ 1.41
-      Point(3, 4),  // B(3,4) - расстояние = 5.00
-      Point(5, 12), // C(5,12) - расстояние = 13.00
-      Point(0, 7),  // D(0,7) - расстояние = 7.00
-      Point(8, 6)   // E(8,6) - расстояние = 10.00
+      Point(1, 1),  // A(1,1) - відстань ≈ 1.41
+      Point(3, 4),  // B(3,4) - відстань = 5.00
+      Point(5, 12), // C(5,12) - відстань = 13.00
+      Point(0, 7),  // D(0,7) - відстань = 7.00
+      Point(8, 6)   // E(8,6) - відстань = 10.00
   };
 
-  cout << "Создан массив из 5 точек:" << endl;
+  cout << "Створено масив із 5 точок:" << endl;
   for (int i = 0; i < 5; i++)
   {
     cout << "Точка " << pointArray[i].getName() << ": (" << pointArray[i].getX()
-         << ", " << pointArray[i].getY() << ") - расстояние: " << fixed
+         << ", " << pointArray[i].getY() << ") - відстань: " << fixed
          << setprecision(2) << pointArray[i].distanceToOrigin() << endl;
   }
 
-  // Находим самую близкую точку к началу координат
-  cout << "\nПоиск самой близкой точки к началу координат:" << endl;
+  // Знаходимо найближчу точку до початку координат
+  cout << "\nПошук найближчої точки до початку координат:" << endl;
   Point closest = Point::findClosestToOrigin(pointArray, 5);
-  cout << "Самая близкая точка: ";
+  cout << "Найближча точка: ";
   closest.display();
-  cout << "Расстояние: " << closest.distanceToOrigin() << endl;
+  cout << "Відстань: " << closest.distanceToOrigin() << endl;
 
-  // Находим самую далекую точку от начала координат
-  cout << "\nПоиск самой далекой точки от начала координат:" << endl;
+  // Знаходимо найвіддаленішу точку від початку координат
+  cout << "\nПошук найвіддаленішої точки від початку координат:" << endl;
   Point farthest = Point::findClosestToOrigin(pointArray, 5);
-  cout << "Самая далекая точка: ";
+  cout << "Найвіддаленіша точка: ";
   farthest.display();
-  cout << "Расстояние: " << farthest.distanceToOrigin() << endl;
+  cout << "Відстань: " << farthest.distanceToOrigin() << endl;
 
-  cout << "\n10. Тестирование с экстремальными случаями:" << endl;
+  cout << "\n10. Тестування з екстремальними випадками:" << endl;
 
-  // Массив с одинаковыми расстояниями
+  // Масив з однаковими відстанями
   Point sameDistanceArray[3] = {
-      Point(3, 4), // расстояние = 5.00
-      Point(4, 3), // расстояние = 5.00
-      Point(0, 5)  // расстояние = 5.00
+      Point(3, 4), // відстань = 5.00
+      Point(4, 3), // відстань = 5.00
+      Point(0, 5)  // відстань = 5.00
   };
 
-  cout << "Массив точек с одинаковым расстоянием до начала координат:" << endl;
-  sameDistanceArray[0].displayAll(sameDistanceArray, 3);
+  cout << "Масив точок з однаковою відстанню до початку координат:" << endl;
+  Point::displayAll(sameDistanceArray, 3);
 
-  cout << "Самая близкая (первая встречающаяся): ";
+  cout << "Найближча (перша знайдена): ";
   Point closestSame = Point::findClosestToOrigin(sameDistanceArray, 3);
   closestSame.display();
 
-  cout << "Самая далекая (первая встречающаяся): ";
+  cout << "Найвіддаленіша (перша знайдена): ";
   Point farthestSame = Point::findClosestToOrigin(sameDistanceArray, 3);
   farthestSame.display();
 
-  cout << "\n11. Тест с большим массивом (>26 точек):" << endl;
+  cout << "\n11. Тест із великим масивом (>26 точок):" << endl;
 
-  // Сбрасываем счетчик перед созданием большого массива
+  // Скидаємо лічильник перед створенням великого масиву
   Point::resetCount();
-  cout << "Счетчик после сброса: " << Point::getCount() << endl;
+  cout << "Лічильник після скидання: " << Point::getCount() << endl;
 
-  // Создаем массив из 10 точек (это безопасно, так как у нас есть A-Z)
+  // Створюємо масив із 10 точок (це безпечно, бо у нас є A-Z)
   Point bigArray[10];
   for (int i = 0; i < 10; i++)
   {
     bigArray[i] =
-        Point(i * 2, i * 3); // Точки с координатами (0,0), (2,3), (4,6), ...
+        Point(i * 2, i * 3); // Точки з координатами (0,0), (2,3), (4,6), ...
   }
 
-  cout << "Счетчик после создания массива из 10 точек: " << Point::getCount()
+  cout << "Лічильник після створення масиву з 10 точок: " << Point::getCount()
        << endl;
 
-  cout << "Первые 5 точек большого массива:" << endl;
+  cout << "Перші 5 точок великого масиву:" << endl;
   for (int i = 0; i < 5; i++)
   {
     cout << "Точка " << bigArray[i].getName() << ": (" << bigArray[i].getX()
          << ", " << bigArray[i].getY() << ")" << endl;
   }
 
-  cout << "Если нужен массив больше 26 точек, просто вызовите "
-          "Point::resetCount() перед созданием!"
+  cout << "Якщо потрібен масив більший за 26 точок, просто викличте "
+          "Point::resetCount() перед створенням!"
        << endl;
 }
