@@ -1,6 +1,6 @@
 #pragma once
 
-// enum TVStatus {
+// enum class TVStatus {
 //     ON,
 //     OFF
 // };
@@ -18,7 +18,7 @@ class TV {
     TV(bool status, short channel, short channelsCount, short volume, short maxVolume);
 
     bool getStatus() const;
-    void setStatus(bool status);
+    void toogleStatus(bool status);
     
     short getChannel() const;
     void setChannel(short channel);

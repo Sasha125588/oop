@@ -1,4 +1,5 @@
 #include "ParkedCar.hpp"
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 
@@ -59,7 +60,7 @@ int ParkedCar::getMinutesParked() const {
 }
 
 void ParkedCar::setMinutesParked(int minutesParked) {
-    this->minutesParked = minutesParked;
+    this->minutesParked = max(minutesParked, 0);
 }
 
 void ParkedCar::displayInfo() const {

@@ -45,17 +45,17 @@ class Book {
 	void listChapters() {
         cout << "=== Список розділів книги: " << bookTitle << " ===" << endl;
     
-    if (chapters.empty()) {
-        cout << "Книга не містить розділів." << endl;
-        return;
-    }
-    
-    cout << "Загальна кількість розділів: " << chapters.size() << endl << endl;
-    
-    for (size_t i = 0; i < chapters.size(); i++) {
-        cout << "Розділ " << (i + 1) << ": " << chapters[i]->getTitle() << endl;
-    }
-    
-    cout << endl;
+        if (chapters.empty()) {
+            cout << "Книга не містить розділів." << endl;
+            return;
+        }
+        
+        cout << "Загальна кількість розділів: " << chapters.size() << endl << endl;
+        
+        for (size_t i = 0; i < chapters.size(); i++) {
+            cout << "Розділ " << (i + 1) << ": " << chapters[i]->getTitle() << endl;
+        }
+        
+        cout << endl;
     };
 };

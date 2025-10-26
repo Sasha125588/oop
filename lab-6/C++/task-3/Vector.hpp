@@ -14,16 +14,41 @@ private:
   int size;
   int capacity;
 
-  void alloc() {
-    capacity *= capacity < 256 ? 2 : 1.25 + 3.0 * 256.0 / 4.0;
+  void alloc(int newCapacity)
+  {
+    capacity = newCapacity;
     T *newArr = new T[capacity];
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
       newArr[i] = arr[i];
     }
 
     delete[] arr;
     arr = newArr;
+  }
+
+  int getNewCapacity()
+  {
+    if (capacity == 0)
+      return 1;
+
+    if (capacity < 256)
+      return capacity * 2;
+
+    return (capacity * 1.25 + 3 * 256 / 4);
+  }
+
+  void ensureNotEmpty() const
+  {
+    if (size == 0)
+      throw runtime_error("Array is empty");
+  }
+
+  void ensureValidIndex(int index) const
+  {
+    if (index < 0 || index >= size)
+      throw invalid_argument("Index out of bounds");
   }
 
 public:
@@ -99,20 +124,17 @@ public:
 
   void pushBack(T value) {
     if (size >= capacity) {
-      alloc();
+      alloc(getNewCapacity());
     }
     arr[size] = value;
     size++;
   }
 
   void insert(T value, int index) {
-    if (index < 0 || index > size) {
-      throw out_of_range("Index out of bounds");
-      return;
-    }
+    ensureValidIndex(index);
 
     if (size >= capacity) {
-      alloc();
+      alloc(getNewCapacity());
     }
     for (int i = size; i > index; i--) {
       swap(arr[i], arr[i - 1]);
@@ -123,36 +145,27 @@ public:
 
   void popBack() { removeByIndex(size - 1); }
 
-  void removeByIndex(int index) {
-    if (index < 0 || index > size) {
-      throw out_of_range("Index out of bounds");
-    }
-    if (size == 0) {
-      throw out_of_range("Array is empty");
-    }
+  void removeByIndex(int index)
+  {
+    ensureNotEmpty();
+    ensureValidIndex(index);
 
-    for (int i = index; i < size - 1; i++) {
+    for (int i = index; i < size - 1; i++)
+    {
       arr[i] = arr[i + 1];
     }
     size--;
 
-    if (size < capacity / 2 && capacity > 10) {
-      capacity /= 2;
-      T *newArr = new T[capacity];
-
-      for (int i = 0; i < size; i++) {
-        newArr[i] = arr[i];
-      }
-
-      delete[] arr;
-      arr = newArr;
+    if (size < capacity / 2 && capacity > 10)
+    {
+      alloc(capacity / 2);
     }
   }
 
   void resize(int newSize, T value = 0) {
     size = newSize;
     if (size >= capacity) {
-      alloc();
+      alloc(getNewCapacity());
     }
 
     for (int i = 0; i < size; i++) {
@@ -267,22 +280,16 @@ public:
   }
 
   T &operator[](int index) {
-    if (size == 0) {
-      throw out_of_range("Array is empty");
-    }
-    if (index < 0 || index >= size) {
-      throw out_of_range("Index out of bounds");
-    }
+    ensureNotEmpty();
+    ensureValidIndex(index);
+
     return arr[index];
   }
 
   const T &operator[](int index) const {
-    if (size == 0) {
-      throw out_of_range("Array is empty");
-    }
-    if (index < 0 || index >= size) {
-      throw out_of_range("Index out of bounds");
-    }
+    ensureNotEmpty();
+    ensureValidIndex(index);
+
     return arr[index];
   }
 

@@ -3,6 +3,7 @@
 #include "Charger.hpp"
 
 using namespace std;
+using enum ConnectorType;
 
 void runTests();
 

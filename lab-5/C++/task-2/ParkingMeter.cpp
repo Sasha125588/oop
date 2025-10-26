@@ -1,4 +1,6 @@
 #include "ParkingMeter.hpp"
+#include <algorithm>
+
 
 ParkingMeter::ParkingMeter() {
     minutesPurchased = 0;
@@ -13,5 +15,5 @@ int ParkingMeter::getMinutesPurchased() const {
 }
 
 void ParkingMeter::setMinutesPurchased(int minutesPurchased) {
-    this->minutesPurchased = minutesPurchased;
+    this->minutesPurchased = std::max(minutesPurchased, 0);
 }

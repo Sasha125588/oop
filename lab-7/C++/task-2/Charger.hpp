@@ -1,6 +1,6 @@
 #pragma once
 
-enum ConnectorType {
+enum class ConnectorType {
     USB_C,
     MICRO_USB
 };

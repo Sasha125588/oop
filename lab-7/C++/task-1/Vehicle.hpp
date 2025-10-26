@@ -9,7 +9,7 @@ using namespace std;
 
 class Vehicle {
     private:
-    std::string model;
+    string model;
     int registrationNumber;
     string category;
 

@@ -18,7 +18,7 @@ private:
 public:
     ParkingTicket();
     
-    ParkingTicket(const ParkedCar* car, const ParkingMeter* meter, 
+    ParkingTicket(const ParkedCar& car, const ParkingMeter& meter, 
                   int ticketNumber, const string& officerName, 
                   const string& badgeNumber);
     
@@ -31,8 +31,8 @@ public:
     string getBadgeNumber() const;
     int getFineAmount() const;
     
-    void setParkedCar(const ParkedCar* car);
-    void setParkingMeter(const ParkingMeter* meter);
+    void setParkedCar(const ParkedCar& car);
+    void setParkingMeter(const ParkingMeter& meter);
     void setTicketNumber(int ticketNumber);
     void setOfficerName(const string& officerName);
     void setBadgeNumber(const string& badgeNumber);

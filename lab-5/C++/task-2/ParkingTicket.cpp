@@ -1,5 +1,4 @@
 #include "ParkingTicket.hpp"
-#include "ParkedCar.hpp"
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -14,11 +13,11 @@ ParkingTicket::ParkingTicket() {
     badgeNumber = "Unknown";
 }
 
-ParkingTicket::ParkingTicket(const ParkedCar* car, const ParkingMeter* meter, 
+ParkingTicket::ParkingTicket(const ParkedCar& car, const ParkingMeter& meter, 
                              int ticketNumber, const string& officerName, 
                              const string& badgeNumber) {
-    this->parkedCar = new ParkedCar(*car);
-    this->parkingMeter = new ParkingMeter(*meter);
+    this->parkedCar = new ParkedCar(car);
+    this->parkingMeter = new ParkingMeter(meter);
     this->ticketNumber = ticketNumber;
     this->officerName = officerName;
     this->badgeNumber = badgeNumber;
@@ -53,12 +52,12 @@ int ParkingTicket::getFineAmount() const {
     return calculateFine();
 }
 
-void ParkingTicket::setParkedCar(const ParkedCar* car) {
-    parkedCar = new ParkedCar(*car);
+void ParkingTicket::setParkedCar(const ParkedCar& car) {
+    parkedCar = new ParkedCar(car);
 }
 
-void ParkingTicket::setParkingMeter(const ParkingMeter* meter) {
-    parkingMeter = new ParkingMeter(*meter);
+void ParkingTicket::setParkingMeter(const ParkingMeter& meter) {
+    parkingMeter = new ParkingMeter(meter);
 }
 
 void ParkingTicket::setTicketNumber(int ticketNumber) {
@@ -83,7 +82,7 @@ int ParkingTicket::calculateFine() const {
     
     int violationMinutes = minutesParked - minutesPurchased;
     
-    double violationHours = ceil(violationMinutes / 60.0); // 140 хв |=> ceil(140 / 60.0) = 3 години(округляємо вверх)
+    int violationHours = ceil(violationMinutes / 60.0); // 140 хв |=> ceil(140 / 60.0) = 2.3 = 3 години(округляємо вверх)
     
     int fine = 0;
     
@@ -114,7 +113,7 @@ void ParkingTicket::displayCarInfo() const {
 void ParkingTicket::displayFineInfo() const {
     int fine = calculateFine();
     int violationMinutes = parkedCar->getMinutesParked() - parkingMeter->getMinutesPurchased();
-    int violationHours = ceil(violationMinutes / 60);
+    int violationHours = ceil(violationMinutes / 60.0);
     
     cout << "┌─────────────────────────────────────────────────┐" << endl;
     cout << "│                FINE INFORMATION                 │" << endl;

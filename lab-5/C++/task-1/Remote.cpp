@@ -27,6 +27,6 @@ void Remote::decVolume() {
     tv->decVolume();
 }
 
-void Remote::goToChannel(int channel) {
+void Remote::goToChannel(short channel) {
     tv->setChannel(channel);
 }

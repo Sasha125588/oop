@@ -24,7 +24,7 @@ bool TV::getStatus() const {
     return status;
 }
 
-void TV::setStatus(bool status) {
+void TV::toogleStatus(bool status) {
     this->status = status;
 }
 
@@ -69,7 +69,7 @@ void TV::prevChannel() {
 }
 
 void TV::incVolume() {
-    volume = min(volume + 1, (int)maxVolume);
+    volume = min((short)(volume + 1), maxVolume);
 }
 
 void TV::decVolume() {

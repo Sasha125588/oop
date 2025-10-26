@@ -39,7 +39,7 @@ bool PoliceOfficer::isParkingTimeExpired(const ParkedCar& car, const ParkingMete
 ParkingTicket* PoliceOfficer::issueParkingTicket(const ParkedCar& car, const ParkingMeter& meter) {
     if (isParkingTimeExpired(car, meter)) {
         ticketCounter++;
-        return new ParkingTicket(&car, &meter, ticketCounter, officerName, badgeNumber);
+        return new ParkingTicket(car, meter, ticketCounter, officerName, badgeNumber);
     }
     return nullptr;
 }

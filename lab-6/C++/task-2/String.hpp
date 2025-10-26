@@ -16,6 +16,18 @@ private:
     return charCount;
   }
 
+  void ensureNotEmpty() const
+  {
+    if (str.length() == 0)
+      throw runtime_error("String is empty");
+  }
+
+  void ensureValidIndex(int index) const
+  {
+    if (index < 0 || index >= str.length())
+      throw invalid_argument("Index out of bounds");
+  }
+
 public:
   String(const char *s) { 
     if (s) str = s; 
@@ -124,16 +136,16 @@ public:
   }
 
   const char operator[](int index) const {
-    if(index < 0 || index >= str.length()) {
-      throw out_of_range("String index out of range");
-    }
+    ensureNotEmpty();
+    ensureValidIndex(index);
+    
     return str[index];
   }
 
   char& operator[](int index) {
-    if(index < 0 || index >= str.length()) {
-      throw out_of_range("String index out of range");
-    }
+    ensureNotEmpty();
+    ensureValidIndex(index);
+    
     return str[index];
   }
 
@@ -143,10 +155,10 @@ public:
     }
 
     if (length <= 0 || start + length > str.length()) {
-      return str.substr(start).c_str();
+      return str.substr(start);
     }
 
-    return str.substr(start, length).c_str();
+    return str.substr(start, length);
   }
 
   String& operator=(const String& other) {

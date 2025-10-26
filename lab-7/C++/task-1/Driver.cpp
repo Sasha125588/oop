@@ -1,25 +1,18 @@
+#include <cstddef>
 #include <iostream>
 #include "Driver.hpp"
 #include "Vehicle.hpp"
 #include <string>
-// #include <vector>
-// #include <sstream>
+#include <unordered_set>
 
-// std::vector<std::string> split(const std::string& target, char c)
-// {
-// 	std::string temp;
-// 	std::stringstream stringstream { target };
-// 	std::vector<std::string> result;
+using namespace std;
 
-// 	while (std::getline(stringstream, temp, c)) {
-// 		result.push_back(temp);
-// 	}
+size_t VehicleHash::operator()(const Vehicle* v) const {
+    return hash<int>()(v->getRegistrationNumber());
+}
 
-// 	return result;
-// }
-
-bool VehiclePointerComparator::operator()(const Vehicle* a, const Vehicle* b) const {
-    return a->getRegistrationNumber() < b->getRegistrationNumber();
+bool VehicleEqual::operator()(const Vehicle* a, const Vehicle* b) const {
+    return a->getRegistrationNumber() == b->getRegistrationNumber();
 }
 
 Driver::Driver()
@@ -28,66 +21,72 @@ Driver::Driver()
     licenseNumber = 0;
 }
 
-Driver::Driver(const string &name, int licenseNum, const set<string> &certificateCategories) : name(name), licenseNumber(licenseNum), certificateCategories(certificateCategories) {}
+Driver::Driver(const string &name, int licenseNum, const unordered_set<string> &certificateCategories)
+    : name(name), licenseNumber(licenseNum), certificateCategories(certificateCategories) {}
 
 void Driver::assignVehicle(Vehicle* vehicle)
 {
     if (!certificateCategories.contains(vehicle->getCategory())) 
     {
-        cout << "Category " << vehicle->getCategory() << " not found in the driver's certificate categories." << endl;
+        cout << "❌ Категорія " << vehicle->getCategory()
+             << " відсутня у посвідченні водія." << endl;
         return;
     }
 
     if (vehicle->getOwner() != nullptr)
     {
-        cout << "Vehicle already has an owner" << endl;
+        cout << "❌ Транспорт вже має власника." << endl;
         return;
     }
 
     if (vehicle->getOwner() == this)
     {
-        cout << "Vehicle already assigned to this driver" << endl;
+        cout << "⚠️ Транспорт вже закріплений за цим водієм." << endl;
         return;
     }
 
     vehicle->owner = this;
-
     vehicles.insert(vehicle);
+
+    cout << "✅ Транспорт \"" << vehicle->getModel() << "\" успішно призначено водію " << name << "." << endl;
 }
 
 void Driver::releaseVehicle(Vehicle* vehicle)
 {
-
     if (!vehicles.contains(vehicle))
     {
-        cout << "Vehicle not found" << endl;
+        cout << "❌ Транспорт не знайдено серед призначених." << endl;
         return;
     }
+
     vehicle->owner = nullptr;
     vehicles.erase(vehicle);
+
+    cout << "✅ Транспорт \"" << vehicle->getModel() << "\" успішно відкріплено від водія " << name << "." << endl;
 }
 
 void Driver::printVehicles() const
 {
-    cout << "=== Транспортные средства водителя " << name << " ===" << endl;
-    cout << "Общее количество: " << vehicles.size() << endl << endl;
+    cout << "=====================================" << endl;
+    cout << "🚘 Транспортні засоби водія: " << name << endl;
+    cout << "Загальна кількість: " << vehicles.size() << endl << endl;
     
     if (vehicles.empty()) {
-        cout << "Нет транспортных средств" << endl;
+        cout << "ℹ️ Немає закріплених транспортних засобів." << endl;
         return;
     }
 
     for (const auto &vehicle : vehicles)
     {
         cout << "🚗 Модель: " << vehicle->getModel() << endl;
-        cout << "   Рег. номер: №" << vehicle->getRegistrationNumber() << endl;
-        cout << "   Категория: " << vehicle->getCategory() << endl;
+        cout << "   Реєстраційний номер: №" << vehicle->getRegistrationNumber() << endl;
+        cout << "   Категорія: " << vehicle->getCategory() << endl;
         cout << "   Статус страховки: " << vehicle->getInsuranceStatus() << endl;
         
         if (vehicle->hasInsurance()) {
             Insurance* ins = vehicle->getInsurance();
-            cout << "   Страховая компания: " << ins->getCompanyName() << endl;
-            cout << "   Номер полиса: " << ins->getPolicyNumber() << endl;
+            cout << "   Страхова компанія: " << ins->getCompanyName() << endl;
+            cout << "   Номер полісу: " << ins->getPolicyNumber() << endl;
         }
         cout << endl;
     }

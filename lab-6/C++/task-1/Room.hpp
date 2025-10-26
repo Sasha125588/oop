@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
@@ -16,13 +17,19 @@ public:
       : width(other.width), length(other.length), side(other.side) {};
 
   double getWidth() const { return width; };
-  void setWidth(double width) { this->width = width; };
+  void setWidth(double width) {
+    this->width = max(0.0, width);
+  };
 
   double getLength() const { return length; };
-  void setLength(double length) { this->length = length; };
+  void setLength(double length) {
+    this->length = max(0.0, length);
+  };
 
   Side getSide() const { return side; };
-  void setSide(Side side) { this->side = side; };
+  void setSide(const Side& side) {
+    this->side = side;
+  };
 
   void print() const {
     cout << "Width: " << width << ", Length: " << length << ", Side: " << side
@@ -30,31 +37,31 @@ public:
   };
 
   Room operator+(const Room &other) const {
-    if (width + other.width > 0 && length + other.length > 0) {
-      return Room(width + other.width, length + other.length, side);
-    }
-    return *this;
+    double newWidth = max(0.0, width + other.width);
+    double newLength = max(0.0, length + other.length);
+
+    return Room(newWidth, newLength, side);
   }
 
   Room operator+(int size) const {
-    if (width + size > 0 && length + size > 0) {
-      return Room(width + size, length + size, side);
-    }
-    return *this;
+    double newWidth = max(0.0, width + size);
+    double newLength = max(0.0, length + size);
+
+    return Room(newWidth, newLength, side);
   }
 
   Room operator-(int size) const {
-    if (width - size > 0 && length - size > 0) {
-      return Room(width - size, length - size, side);
-    }
-    return *this;
+    double newWidth = max(0.0, width - size);
+    double newLength = max(0.0, length - size);
+
+    return Room(newWidth, newLength, side);
   };
 
   Room operator*(int size) const {
-    if (width * size > 0 && length * size > 0) {
-      return Room(width * size, length * size, side);
-    }
-    return *this;
+    double newWidth = max(0.0, width * size);
+    double newLength = max(0.0, length * size);
+
+    return Room(newWidth, newLength, side);
   };
 
   Room &operator++() {
@@ -70,8 +77,8 @@ public:
   }
 
   Room &operator--() {
-    --width;
-    --length;
+    width = max(0.0, width - 1);
+    length = max(0.0, length - 1);
     return *this;
   }
 
@@ -94,14 +101,14 @@ public:
   }
 
   Room& operator+=(int size) {
-    width += size;
-    length += size;
+    width = max(0.0, width + size);
+    length = max(0.0, length + size);
     return *this;
   }
 
   Room& operator*=(int size) {
-    width *= size;
-    length *= size;
+    width = max(0.0, width * size);
+    length = max(0.0, length * size);
     return *this;
   }
 
@@ -116,7 +123,7 @@ public:
     return *this;
   }
 
-  friend std::ostream& operator<< (std::ostream &out, const Room& room) {
+  friend std::ostream& operator<<(std::ostream &out, const Room& room) {
     out << "Width: " << room.width << ", Length: " << room.length << ", Side(0-3): " << room.side << endl;
     return out;
   }

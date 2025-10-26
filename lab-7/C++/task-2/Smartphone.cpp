@@ -1,4 +1,5 @@
 #include "Smartphone.hpp"
+#include "Charger.hpp"
 
 #include <iostream>
 using namespace std;
@@ -30,9 +31,9 @@ void Smartphone::сhargerInfo() {
     cout << "=== Інформація про зарядний пристрій ===" << endl;
     cout << "Тип роз'єму: ";
     
-    if (currentCharger->getConnectorType() == USB_C) {
+    if (currentCharger->getConnectorType() == ConnectorType::USB_C) {
         cout << "USB Type-C";
-    } else if (currentCharger->getConnectorType() == MICRO_USB) {
+    } else if (currentCharger->getConnectorType() == ConnectorType::MICRO_USB) {
         cout << "Micro USB";
     }
     

@@ -16,7 +16,7 @@ class Remote {
     void prevChannel();
     void incVolume();
     void decVolume();
-    void goToChannel(int channel);
+    void goToChannel(short channel);
 
     
 };

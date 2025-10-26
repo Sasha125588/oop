@@ -41,6 +41,18 @@ private:
     return (capacity * 1.25 + 3 * 256 / 4);
   }
 
+  void ensureNotEmpty() const
+  {
+    if (size == 0)
+      throw runtime_error("Array is empty");
+  }
+
+  void ensureValidIndex(int index) const
+  {
+    if (index < 0 || index >= size)
+      throw invalid_argument("Index out of bounds");
+  }
+
 public:
   Array()
   {
@@ -92,6 +104,7 @@ public:
 
   void removeByIndex(int index)
   {
+    ensureNotEmpty();
     ensureValidIndex(index);
 
     for (int i = index; i < size - 1; i++)
@@ -220,17 +233,5 @@ public:
     ensureValidIndex(index);
 
     return arr[index];
-  }
-
-  void ensureNotEmpty() const
-  {
-    if (size == 0)
-      throw runtime_error("Array is empty");
-  }
-
-  void ensureValidIndex(int index) const
-  {
-    if (index < 0 || index >= size)
-      throw invalid_argument("Index out of bounds");
   }
 };
