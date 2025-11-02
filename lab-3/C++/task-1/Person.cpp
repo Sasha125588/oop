@@ -64,8 +64,8 @@ void Person::setAddress(const char* address) {
   strcpy(this->address, address);
 }
 
-short Person::getAge() const { return age; }
-void Person::setAge(short age) { this->age = age; }
+int Person::getAge() const { return age; }
+void Person::setAge(int age) { this->age = age; }
 
 const char* Person::getPhoneNumber() const { return phoneNumber; }
 void Person::setPhoneNumber(const char* phoneNumber) { 

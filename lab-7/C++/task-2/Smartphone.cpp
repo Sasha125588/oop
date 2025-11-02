@@ -7,17 +7,17 @@ using namespace std;
 
 void Smartphone::connectCharger(Charger* newCharger) {
     if(newCharger->getConnectorType() != this->requiredConnector) {
-        cout << "Invalid connector type" << endl;
+        cout << "Невірний тип розʼєму" << endl;
         return;
     }
 
-    delete currentCharger;
+    // delete currentCharger;
     currentCharger = newCharger;
 }
 
 void Smartphone::disconnectCharger() {
     if(currentCharger != nullptr) {
-        delete currentCharger;
+        // delete currentCharger;
         currentCharger = nullptr;
     }
 }

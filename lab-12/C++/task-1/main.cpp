@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cctype>
 #include <deque>
+#include <functional>
 #include <iostream>
 #include <list>
 #include <string>
@@ -49,7 +50,7 @@ int main()
     cin >> searchLetter;
     
     auto res1 = find_if(d.begin(), d.end(), [searchLetter](const string& word) {
-        return !word.empty() && word[0] == searchLetter;
+        return word[0] == searchLetter;
     });
     
     if (res1 != d.end()) {
@@ -64,7 +65,7 @@ int main()
     cout << "Enter minimum length: ";
     cin >> minLength;
     
-    int count = count_if(d.begin(), d.end(), [minLength](const string& word) {
+    auto count = count_if(d.begin(), d.end(), [minLength](const string& word) {
         return word.length() > minLength;
     });
     
@@ -93,10 +94,7 @@ int main()
     list<string> dequeToList;
     
     transform(d.begin(), d.end(), back_inserter(dequeToList), [](const string& word) {
-        if (word.length() > 0) {
-            return word.substr(0, word.length() - 1);
-        }
-        return string("");
+        return word.substr(0, word.length() - 1);
     });
     
     printList(dequeToList, "List");
@@ -104,15 +102,16 @@ int main()
 
     cout << "Task 5: Sort deque in ascending (alphabetical) order" << endl;
     deque<string> d_ascending = d;
-    sort(d_ascending.begin(), d_ascending.end());
+    sort(d_ascending.begin(), d_ascending.end(), std::less<string>());
     printDeque(d_ascending, "Sorted ascending");
     cout << endl;
 
     cout << "Task 6: Sort deque in descending order" << endl;
     deque<string> d_descending = d;
-    sort(d_descending.begin(), d_descending.end(), [](const string& a, const string& b) {
-        return a > b;
-    });
+    // sort(d_descending.begin(), d_descending.end(), [](const string& a, const string& b) {
+    //     return a > b;
+    // });
+    sort(d_descending.begin(), d_descending.end(), std::greater<string>());
     printDeque(d_descending, "Sorted descending");
     cout << endl;
 
@@ -146,7 +145,7 @@ int main()
 
     cout << "Task 10: Convert all words in the list to uppercase" << endl;
     for (auto& word : dequeToList) {
-        transform(word.begin(), word.end(), word.begin(), [](unsigned char c) {
+        transform(word.begin(), word.end(), word.begin(), [](char c) {
             return toupper(c);
         });
     }

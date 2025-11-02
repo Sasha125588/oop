@@ -1,18 +1,14 @@
+#pragma once
+
 #include <stdexcept>
 #include <string>
 
+#include "BaseException.hpp"
+
 using namespace std;
 
-class InvalidNumberException : public invalid_argument {
-private:
-  string message;
-  string invalidData;
-
+class InvalidNumberException : public BaseException<string>, public invalid_argument {
 public:
-  InvalidNumberException(const string &invalidData, const string &message)
-      : invalid_argument(message), message(message),
-      invalidData(invalidData) {}
-
-  const string &getErrMsg() const { return message; }
-  const string &getInvalidData() const { return invalidData; }
+  InvalidNumberException(const string &message, const string &invalidData)
+      : BaseException(message, invalidData), invalid_argument(message) {}
 };

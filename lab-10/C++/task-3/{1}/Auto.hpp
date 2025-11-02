@@ -1,5 +1,6 @@
 #include <string>
-#include <cctype>
+// #include <regex>
+
 #include "WrongMaxSpeedException.hpp"
 #include "WrongSpeedException.hpp"
 #include "InvalidNumberException.hpp"
@@ -8,47 +9,44 @@ using namespace std;
 
 class Auto {
     private:
+
+    static constexpr int MAX_ALLOWED_SPEED = 360;
+    static constexpr size_t NUMBER_LENGTH = 8;
+
     string number;
     int speed;
     int maxSpeed;
-
-    bool isValidNumber(const string& num) const {
-        if (num.length() != 8) return false;
+    
+    // bool isValidNumber(const std::string& number) const {
+    //     static const std::regex pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$");
+    //     return std::regex_match(number, pattern);
+    // }
+    
+    bool isValidNumber(const string& number) const {
+        if (number.length() != NUMBER_LENGTH) return false;
         
-        if (!isupper(num[0]) || !isupper(num[1])) return false;
+        if (!isupper(number[0]) || !isupper(number[1])) return false;
         
         for (int i = 2; i < 6; i++) {
-            if (!isdigit(num[i])) return false;
+            if (!isdigit(number[i])) return false;
         }
         
-        if (!isupper(num[6]) || !isupper(num[7])) return false;
+        if (!isupper(number[6]) || !isupper(number[7])) return false;
         
         return true;
     }
 
     public:
-    Auto(const string& number, int speed, int maxSpeed) : speed(0), maxSpeed(0) {
-        if (!isValidNumber(number)) {
-            throw InvalidNumberException(number, "Невірний формат номера. Очікується формат: AB1234CD");
-        }
-        
-        if (maxSpeed > 360) {
-            throw WrongMaxSpeedException(maxSpeed, "Максимальна швидкість не може перевищувати 360 км/год");
-        }
-        
-        if (speed > maxSpeed) {
-            throw WrongSpeedException(speed, "Швидкість не може перевищувати максимальну швидкість");
-        }
-        
-        this->number = number;
-        this->maxSpeed = maxSpeed;
-        this->speed = speed;
+    Auto(const string& number, int speed, int maxSpeed): speed(0) {
+      setNumber(number);
+      setMaxSpeed(maxSpeed);
+      setSpeed(speed);
     }
 
     const string& getNumber() const { return number; }
     void setNumber(const string& value) {
         if (!isValidNumber(value)) {
-            throw InvalidNumberException(value, "Невірний формат номера. Очікується формат: AB1234CD");
+            throw InvalidNumberException("Невірний формат номера. Очікується формат: AB1234CD", value);
         }
         this->number = value;
     }
@@ -56,19 +54,19 @@ class Auto {
     int getSpeed() const { return speed; }
     void setSpeed(int value) {
         if (value > maxSpeed) {
-            throw WrongSpeedException(value, "Швидкість не може перевищувати максимальну швидкість");
+            throw WrongSpeedException("Швидкість не може перевищувати максимальну швидкість", value);
         }
         this->speed = value;
     }
 
     int getMaxSpeed() const { return maxSpeed; }
     void setMaxSpeed(int value) {
-        if (value > 360) {
-            throw WrongMaxSpeedException(value, "Максимальна швидкість не може перевищувати 360 км/год");
+        if (value > MAX_ALLOWED_SPEED) {
+            throw WrongMaxSpeedException("Максимальна швидкість не може перевищувати 360 км/год", value);
         }
         
         if (speed > value) {
-            throw WrongSpeedException(speed, "Поточна швидкість перевищує нову максимальну швидкість");
+            throw WrongSpeedException("Поточна швидкість перевищує нову максимальну швидкість", speed);
         }
         
         this->maxSpeed = value;
@@ -77,18 +75,13 @@ class Auto {
     void increaseSpeed(int value = 5) {
         int newSpeed = this->speed + value;
         if (newSpeed > maxSpeed) {
-            throw WrongSpeedException(newSpeed, "Збільшення швидкості призведе до перевищення максимальної швидкості");
+            throw WrongSpeedException("Збільшення швидкості призведе до перевищення максимальної швидкості", newSpeed);
         }
         this->speed = newSpeed;
     }
 
     void decreaseSpeed(int value = 5) {
-        int newSpeed = this->speed - value;
-        if (newSpeed < 0) {
-            this->speed = 0;
-        } else {
-            this->speed = newSpeed;
-        }
+        this->speed = max(0, this->speed - value);
     }
 
 };

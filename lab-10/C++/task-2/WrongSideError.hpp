@@ -5,10 +5,10 @@ using namespace std;
 
 class WrongSideError: public invalid_argument {
     private:
-    string message;
+      string message;
 
     public:
-    WrongSideError(const string& message): invalid_argument(message), message(message) {}
+      WrongSideError(const string& message): invalid_argument(message), message(message) {}
 
-    const string& getErrMsg() const { return message; }
+      const string& getErrMsg() const { return message; }
 };

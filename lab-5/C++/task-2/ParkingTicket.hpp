@@ -10,6 +10,7 @@ private:
     ParkedCar* parkedCar;
     ParkingMeter* parkingMeter;
     int ticketNumber;
+    
     string officerName;
     string badgeNumber;
     

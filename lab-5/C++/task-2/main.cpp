@@ -10,7 +10,8 @@ void testTask2();
 
 int main()
 {
-    demoScenariosTask2();
+    // demoScenariosTask2();
+    testTask2();
     
     return 0;
 }

@@ -148,7 +148,7 @@ void testSuccessfulOperations() {
         network.signup("charlie99", "Charlie789#Strong");
         cout << "✓ Користувач 'charlie99' успішно зареєстрований" << endl;
         
-        cout << "Всього користувачів: " << network.getUserCount() << endl;
+        cout << "Всього користувачів: " << network.getUsersCount() << endl;
         
         // Успішні входи
         network.login("alice2024", "AlicePass123!");

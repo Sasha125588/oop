@@ -8,7 +8,8 @@
 
 using namespace std;
 
-template <typename T> class Vector {
+template <typename T> 
+class Vector {
 private:
   T *arr;
   int size;
@@ -256,14 +257,7 @@ public:
   }
 
   bool operator!=(const Vector &other) const {
-    if (size != other.size || capacity != other.capacity)
-      return true;
-
-    for (int i = 0; i < size; i++) {
-      if (arr[i] != other.arr[i])
-        return true;
-    }
-    return false;
+    return !(*this==other);
   }
 
   Vector<T> operator!() const {

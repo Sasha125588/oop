@@ -5,12 +5,14 @@
 
 using namespace std;
 
-struct Book {
+class Book {
+    private:
     string author;
     string name;
     int year;
     bool available; 
 
+    public:
     Book(const string& author = "", const string& name = "", int year = 0, bool available = true)
         : author(author), name(name), year(year), available(available) {}
 

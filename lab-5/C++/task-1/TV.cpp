@@ -12,14 +12,14 @@ TV::TV() {
     volume = 10;
 }
 
-TV::TV(bool status, short channel, short channelsCount, short volume, short maxVolume) {
-    this->status = status;
-    this->channel = channel;
-    this->channelsCount = channelsCount;
-    this->volume = volume;
-    this->maxVolume = maxVolume;
-}
-
+TV::TV(bool status, short channel, short channelsCount, 
+    short volume, short maxVolume)
+        : status(status)
+        , maxVolume(maxVolume)
+        , channelsCount(channelsCount)
+        , channel(channel)
+        , volume(volume) {}
+        
 bool TV::getStatus() const {
     return status;
 }
@@ -33,7 +33,7 @@ short TV::getChannel() const {
 }
 
 void TV::setChannel(short channel) {
-    this->channel = channel;
+    this->channel = max((short)0, min(channel, channelsCount));
 }
 
 short TV::getVolume() const {

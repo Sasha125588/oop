@@ -15,7 +15,7 @@ private:
   void allocate() {
     arr = new T*[row];
     for (int r = 0; r < row; r++) {
-      arr[r] = new T[col]();
+      arr[r] = new T*[col]();
     }
   }
 
@@ -24,6 +24,18 @@ private:
       delete[] arr[r];
     }
     delete[] arr;
+  }
+
+  void ensureNotEmpty() const
+  {
+    if (row == 0 || col == 0)
+      throw runtime_error("Matrix is empty");
+  }
+
+  void ensureValidIndex(int r, int c) const
+  {
+    if (r < 0 || r >= row || c < 0 || c >= col)
+      throw out_of_range("Index out of bounds");
   }
 
 public:
@@ -66,8 +78,7 @@ public:
   }
 
   bool findByValue(T value) const {
-    if (row == 0 || col == 0)
-      throw runtime_error("Matrix is empty");
+    ensureNotEmpty();
 
     for (int r = 0; r < row; r++) {
       for (int c = 0; c < col; c++) {
@@ -79,8 +90,7 @@ public:
   }
 
   T findMin() const {
-    if (row == 0 || col == 0)
-      throw runtime_error("Matrix is empty");
+    ensureNotEmpty();
 
     T min = arr[0][0];
     for (int r = 0; r < row; r++) {
@@ -93,8 +103,7 @@ public:
   }
 
   T findMax() const {
-    if (row == 0 || col == 0)
-      throw runtime_error("Matrix is empty");
+    ensureNotEmpty();
 
     T max = arr[0][0];
     for (int r = 0; r < row; r++) {
@@ -117,18 +126,16 @@ public:
   }
 
   T &operator()(int r, int c) {
-    if (row == 0 || col == 0)
-      throw runtime_error("Matrix is empty");
-    if (r < 0 || r >= row || c < 0 || c >= col)
-      throw out_of_range("Index out of bounds");
+    ensureNotEmpty();
+    ensureValidIndex(r, c);
+    
     return arr[r][c];
   }
 
   const T &operator()(int r, int c) const {
-    if (row == 0 || col == 0)
-      throw runtime_error("Matrix is empty");
-    if (r < 0 || r >= row || c < 0 || c >= col)
-      throw out_of_range("Index out of bounds");
+    ensureNotEmpty();
+    ensureValidIndex(r, c);
+    
     return arr[r][c];
   }
 

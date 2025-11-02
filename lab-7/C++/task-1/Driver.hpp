@@ -22,6 +22,7 @@ class Driver {
     private:
     string name;
     int licenseNumber;
+    
     unordered_set<string> certificateCategories;
     unordered_set<Vehicle*, VehicleHash, VehicleEqual> vehicles;
 

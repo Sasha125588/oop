@@ -44,6 +44,7 @@ class Unit {
         
         cout << "\n⚔️  " << name << " атакує " << other.name 
              << " (пошкодження: " << damage << ")" << endl;
+             
         other.takeDamage(damage);
     }
 

@@ -3,7 +3,7 @@ class Person {
     private:
       char* name;
       char* address;
-      short age;
+      int age;
       char* phoneNumber;
     
     public:
@@ -19,8 +19,8 @@ class Person {
       const char* getAddress() const;
       void setAddress(const char* address);
     
-      short getAge() const;
-      void setAge(short age);
+      int getAge() const;
+      void setAge(int age);
     
       const char* getPhoneNumber() const;
       void setPhoneNumber(const char* phoneNumber);

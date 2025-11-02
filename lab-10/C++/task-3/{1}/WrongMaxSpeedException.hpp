@@ -1,18 +1,15 @@
+#pragma once
+
 #include <stdexcept>
 #include <string>
 
+#include "BaseException.hpp"
+
 using namespace std;
 
-class WrongMaxSpeedException : public invalid_argument {
-private:
-  string message;
-  int invalidData;
-
+class WrongMaxSpeedException : public BaseException<int>, public invalid_argument {
 public:
-  WrongMaxSpeedException(int invalidData, const string &message)
-      : invalid_argument(message), message(message),
-        invalidData(invalidData) {}
 
-  const string& getErrMsg() const { return message; }
-  int getInvalidData() const { return invalidData; }
+      WrongMaxSpeedException(const string &message, int invalidData)
+  : BaseException(message, invalidData), invalid_argument(message) {}
 };

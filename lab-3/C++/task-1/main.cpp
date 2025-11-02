@@ -1,4 +1,4 @@
-#include "Person.cpp"
+#include "./Person.hpp"
 #include <iostream>
 
 using namespace std;
@@ -7,7 +7,7 @@ void testPerson();
 
 int main()
 {
-  srand(time(0));
+  srand((unsigned)time(0));
 
   testPerson();
 

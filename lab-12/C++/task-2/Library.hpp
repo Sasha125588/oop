@@ -16,7 +16,7 @@ private:
     static string toLower(const string& str) {
         string result = str;
         transform(result.begin(), result.end(), result.begin(), 
-                  [](unsigned char c) { return tolower(c); });
+                  [](char c) { return tolower(c); });
         return result;
     }
 
@@ -106,14 +106,14 @@ public:
             return false;
         }
 
-        if (it->isAvailable()) {
-            it->setAvailable(false);
-            cout << "Book issued: " << *it << endl;
-            return true;
-        } else {
+        if (!it->isAvailable()) {
             cout << "Book is already issued." << endl;
             return false;
         }
+
+        it->setAvailable(false);
+        cout << "Book issued: " << *it << endl;
+        return true;
     }
 
     // 6. Повернення книги у бібліотеку
@@ -124,14 +124,14 @@ public:
             return false;
         }
         
-        if (!it->isAvailable()) {
-            it->setAvailable(true);
-            cout << "Book returned: " << *it << endl;
-            return true;
-        } else {
+        if (it->isAvailable()) {
             cout << "Book is already in library." << endl;
             return false;
         }
+
+        it->setAvailable(true);
+        cout << "Book returned: " << *it << endl;
+        return true;
     }
 
     // 7. Впорядкування книг за автором, потім за назвою

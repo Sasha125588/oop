@@ -6,38 +6,41 @@
 // };
 
 class TV {
-    private:
-    bool status;
-    short channel;
-    short channelsCount;
-    short volume;
-    short maxVolume;
+private:
+  bool status;
+  short channel;
+  short channelsCount;
+  short volume;
+  short maxVolume;
 
-    public:
-    TV();
-    TV(bool status, short channel, short channelsCount, short volume, short maxVolume);
+  void setChannel(short channel);
 
-    bool getStatus() const;
-    void toogleStatus(bool status);
-    
-    short getChannel() const;
-    void setChannel(short channel);
-    
-    short getVolume() const;
-    void setVolume(short volume);
+public:
+  TV();
+  TV(bool status, short channel, short channelsCount
+    , short volume
+    , short maxVolume);
 
-    short getChannelsCount() const;
-        void setChannelsCount(short channelsCount);
+  bool getStatus() const;
+  void toogleStatus(bool status);
 
-    short getMaxVolume() const;
-    void setMaxVolume(short maxVolume);
+  short getChannel() const;
 
-    void power();
-    void nextChannel();
-    void prevChannel();
-    void incVolume();
-    void decVolume();
-    void show();
+  short getVolume() const;
+  void setVolume(short volume);
 
-    friend class Remote;
+  short getChannelsCount() const;
+  void setChannelsCount(short channelsCount);
+
+  short getMaxVolume() const;
+  void setMaxVolume(short maxVolume);
+
+  void power();
+  void nextChannel();
+  void prevChannel();
+  void incVolume();
+  void decVolume();
+  void show();
+
+  friend class Remote;
 };

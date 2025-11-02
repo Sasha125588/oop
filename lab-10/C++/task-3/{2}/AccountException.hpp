@@ -11,7 +11,7 @@ class AccountException {
     T invalidData;
 
     public:
-    AccountException(T invalidData, const string &message): message(message), invalidData(invalidData) {}
+    AccountException(const string &message, const T& invalidData): message(message), invalidData(invalidData) {}
 
     const string& getErrMsg() const { return message; }
     const T& getInvalidData() const { return invalidData; }

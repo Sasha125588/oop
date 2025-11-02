@@ -7,10 +7,14 @@ using namespace std;
 class Account
 {
     private:
+
+      static constexpr int MAX_ALLOWED_SPEED = 360;
+      static constexpr size_t MIN_PASS_LENGTH = 8;
+
 	string login, password;
 
     bool isValidPassword(const string& pass) const {
-        if (pass.length() <= 7) return false;
+        if (pass.length() < MIN_PASS_LENGTH) return false;
         
         bool hasDigit = false;
         bool hasUpper = false;
@@ -31,8 +35,8 @@ class Account
     Account() = default;
     Account(const string& login, const string& password) : login(login) {
         if (!isValidPassword(password)) {
-            throw PasswordFormatException(password, 
-                "Пароль повинен мати довжину більше 7 символів та містити хоч одну цифру, велику та малу букви, спецсимвол");
+            throw PasswordFormatException(
+                "Пароль повинен мати довжину більше 7 символів та містити хоч одну цифру, велику та малу букви, спецсимвол", password);
         }
         this->password = password;
     }
@@ -43,12 +47,11 @@ class Account
 
     void changePassword(const string& newPassword) {
         if (!isValidPassword(newPassword)) {
-            throw PasswordFormatException(newPassword, 
-                "Пароль повинен мати довжину більше 7 символів та містити хоч одну цифру, велику та малу букви, спецсимвол");
+            throw PasswordFormatException( 
+                "Пароль повинен мати довжину більше 7 символів та містити хоч одну цифру, велику та малу букви, спецсимвол", newPassword);
         }
         if (newPassword != password) {
             password = newPassword;
         }
     }
-
 };

@@ -4,7 +4,8 @@
 Remote::Remote(TV* tv): tv(tv) {}
 
 Remote::~Remote() {
-    delete tv;
+    if(tv != nullptr)
+        delete tv;
 }
 
 void Remote::power() {
@@ -28,5 +29,5 @@ void Remote::decVolume() {
 }
 
 void Remote::goToChannel(short channel) {
-    tv->setChannel(channel);
+    tv->setChannel(channel); // TODO: private method, friend
 }

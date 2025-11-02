@@ -12,7 +12,9 @@ private:
 
 public:
   Room(double width, double length, Side side)
-      : width(width), length(length), side(side) {};
+      : width(width), length(length), side(side) {
+        setWidth(width);
+      };
   Room(const Room &other)
       : width(other.width), length(other.length), side(other.side) {};
 

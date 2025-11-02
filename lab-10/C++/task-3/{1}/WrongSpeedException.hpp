@@ -1,18 +1,11 @@
 #include <stdexcept>
 #include <string>
+#include "BaseException.hpp"
 
 using namespace std;
 
-class WrongSpeedException : public invalid_argument {
-private:
-  string message;
-  int invalidData;
-
+class WrongSpeedException : public BaseException<int>, public invalid_argument {
 public:
-  WrongSpeedException(int invalidData, const string &message)
-      : invalid_argument(message), message(message),
-      invalidData(invalidData) {}
-
-  const string& getErrMsg() const { return message; }
-  int getInvalidData() const { return invalidData; }
+  WrongSpeedException(const string &message, int invalidData)
+      : BaseException(message, invalidData), invalid_argument(message) {}
 };

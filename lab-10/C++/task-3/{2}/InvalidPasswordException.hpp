@@ -6,6 +6,6 @@ using namespace std;
 
 class InvalidPasswordException: public AccountException<string> {
     public:
-    InvalidPasswordException(const string& password, const string& message): AccountException(password, message) {}
+    InvalidPasswordException(const string& message, const string& InvalidPassword): AccountException(message, InvalidPassword) {}
 
 };

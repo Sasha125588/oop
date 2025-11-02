@@ -6,7 +6,7 @@ using namespace std;
 class Clock
 {
 private:
-    int hours = 23;
+    int hours = 11;
     int minutes = 59;
 
     bool alarmEnabled;
@@ -66,6 +66,7 @@ public:
 
     void print12H()
     {
-        cout << hours % 12 << ":" << minutes << endl;
-    }; // AM | PM
+        int displayHours = (hours == 0 || hours == 12) ? 12 : hours % 12;
+        cout << displayHours << ":" << minutes << (hours < 12 ? " AM" : " PM") << endl;
+    }; // TODO: AM | PM
 };

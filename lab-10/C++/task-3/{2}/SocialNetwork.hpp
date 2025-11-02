@@ -10,39 +10,39 @@ using namespace std;
 
 class SocialNetwork {
 private:
-  vector<Account> accounts;
+  vector<Account*> accounts;
 
 public:
   void signup(const string &login, const string &password) {
-    for (const auto &u : accounts) {
-      if (u.getLogin() == login) {
-        throw ExistLoginException(login, "Логін '" + login + "' вже існує в системі");
+    for (const auto &user : accounts) {
+      if (user->getLogin() == login) {
+        throw ExistLoginException("Логін '" + login + "' вже існує в системі", login);
       }
     }
     
-    Account user(login, password);
+    Account* user = new Account(login, password);
     accounts.push_back(user);
   }
 
   void login(const string &login, const string &password) {
     bool found = false;
     
-    for (const auto &u : accounts) {
-      if (u.getLogin() == login) {
+    for (const auto &user : accounts) {
+      if (user->getLogin() == login) {
         found = true;
-        if (u.getPassword() != password) {
-          throw InvalidPasswordException(password, "Невірний пароль для логіну '" + login + "'");
+        if (user->getPassword() != password) {
+          throw InvalidPasswordException("Невірний пароль для логіну '" + login + "'", password);
         }
         return;
       }
     }
     
     if (!found) {
-      throw InvalidLoginException(login, "Логін '" + login + "' не знайдено в системі");
+      throw InvalidLoginException("Логін '" + login + "' не знайдено в системі", login);
     }
   }
 
-  int getUserCount() const {
+  int getUsersCount() const {
     return accounts.size();
   }
 };

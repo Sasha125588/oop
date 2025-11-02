@@ -24,6 +24,7 @@ class Vehicle {
     ~Vehicle() {
         if (insurance != nullptr) {
             delete insurance;
+            insurance = nullptr;
         }
     }
 
@@ -90,7 +91,7 @@ class Vehicle {
 
     string getInsuranceStatus() const {
         if (insurance == nullptr) {
-            return "Нет страховки";
+            return "Немає страховки";
         }
         return insurance->getStatus();
     }
