@@ -5,22 +5,11 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include "ranges"
 
 using namespace std;
 
-void printDeque(const deque<string>& d, const string& title = "") {
-    if (!title.empty()) {
-        cout << title << ": ";
-    }
-    cout << "[";
-    for (size_t i = 0; i < d.size(); ++i) {
-        cout << "\"" << d[i] << "\"";
-        if (i < d.size() - 1) cout << ", ";
-    }
-    cout << "]" << endl;
-}
-
-void printList(const list<string>& l, const string& title = "") {
+void print_list(const list<string>& l, const string& title = "") {
     if (!title.empty()) {
         cout << title << ": ";
     }
@@ -34,125 +23,160 @@ void printList(const list<string>& l, const string& title = "") {
     cout << "]" << endl;
 }
 
-int main()
-{
-    deque<string> d = {"apple", "banana", "cherry", "date", "elderberry", 
-                       "fig", "grape", "kiwi", "lemon", "mango"};
+void print_deque(const deque<string>& d, const string& title = "") {
+    if (!title.empty()) {
+        cout << title << ": ";
+    }
+    cout << "[";
+    for (size_t i = 0; i < d.size(); ++i) {
+        cout << "\"" << d[i] << "\"";
+        if (i < d.size() - 1) cout << ", ";
+    }
+    cout << "]" << endl;
+}
+
+int main() {
     
-    cout << "=== Lab 12 - Task 1: STL Algorithms with Deque ===" << endl << endl;
-    cout << "Initial deque: ";
-    printDeque(d);
-    cout << endl;
+    deque<string> words{"apple", "banana", "cherry", "date", "elderberry", 
+                       "fig", "grape", "kiwi", "lemon", "mango"};
 
     cout << "Task 1: Find first word starting with a given letter" << endl;
-    char searchLetter;
+
+    char search_letter;
     cout << "Enter a letter: ";
-    cin >> searchLetter;
-    
-    auto res1 = find_if(d.begin(), d.end(), [searchLetter](const string& word) {
-        return word[0] == searchLetter;
+    cin >> search_letter;
+
+    auto first_word = find_if(words.begin(), words.end(), [search_letter](const string& word) {
+        return word[0] == search_letter;
     });
-    
-    if (res1 != d.end()) {
-        cout << "Result: \"" << *res1 << "\"" << endl;
+
+    if (first_word != words.end()) {
+        cout << "Result: " << *first_word << endl;
     } else {
         cout << "Result: Not found" << endl;
     }
+
     cout << endl;
 
     cout << "Task 2: Count words with length greater than a given value" << endl;
-    int minLength;
+
+    int min_length;
     cout << "Enter minimum length: ";
-    cin >> minLength;
-    
-    auto count = count_if(d.begin(), d.end(), [minLength](const string& word) {
-        return word.length() > minLength;
+    cin >> min_length;
+
+    auto count_words_longer_than = count_if(words.begin(), words.end(), [min_length](const string& word) {
+        return word.length() > min_length;
     });
-    
-    cout << "Result: " << count << " word(s) with length > " << minLength << endl;
+
+    cout << "Result: " << count_words_longer_than << " word(s) with length > " << min_length << endl;
     cout << endl;
 
     cout << "Task 3: Find longest and shortest words" << endl;
-    
-    auto longest = max_element(d.begin(), d.end(), [](const string& a, const string& b) {
-        return a.length() < b.length();
-    });
-    
-    auto shortest = min_element(d.begin(), d.end(), [](const string& a, const string& b) {
-        return a.length() < b.length();
-    });
-    
-    if (longest != d.end()) {
-        cout << "Longest word: \"" << *longest << "\" (length: " << longest->length() << ")" << endl;
-    }
-    if (shortest != d.end()) {
-        cout << "Shortest word: \"" << *shortest << "\" (length: " << shortest->length() << ")" << endl;
-    }
-    cout << endl;
 
-    cout << "Task 4: Create list with last letter removed from each word" << endl;
-    list<string> dequeToList;
-    
-    transform(d.begin(), d.end(), back_inserter(dequeToList), [](const string& word) {
-        return word.substr(0, word.length() - 1);
+    auto longest_word = max_element(words.begin(), words.end(), [](const string& a, const string& b) {
+        return a.length() < b.length();
     });
-    
-    printList(dequeToList, "List");
+
+    auto shortest_word = min_element(words.begin(), words.end(), [](const string& a, const string& b) {
+        return a.length() < b.length();
+    });
+
+    if (longest_word != words.end()) {
+        cout << "Longest word: \"" << *longest_word << "\" (length: " << longest_word->length() << ")" << endl;
+    }
+    if (shortest_word != words.end()) {
+        cout << "Shortest word: \"" << *shortest_word << "\" (length: " << shortest_word->length() << ")" << endl;
+    }
     cout << endl;
+    
+    cout << "Task 4: Create list with last letter removed from each word" << endl;
+
+    list<string> deque_to_list(words.size()); 
+
+    // Щоб transform працював правильно потрібно попередньо виділити памʼять для deque_to_list(не менше ніж words.size())
+    // або замість deque_to_list.begin() використати back_inserter(deque_to_list).
+    // Якщо коротко, то back_inserter - "розумний" ітератор(вказівник) який при присвоєнні значення викликає push_back(),
+    // тобто вставляє елемент в кінець колекції
+
+    transform(words.cbegin(), words.cend(), deque_to_list.begin(), [](const string& word) {
+        return word.substr(0, word.length() - 1); 
+    }); 
+
+    // В С++23 додали можливість писати так
+    // deque_to_list = words | views::transform([](const string& word) { return word.substr(0, word.length() - 1); })
+    //                       | ranges::to<list>();
+    
+    print_list(deque_to_list);
 
     cout << "Task 5: Sort deque in ascending (alphabetical) order" << endl;
-    deque<string> d_ascending = d;
-    sort(d_ascending.begin(), d_ascending.end(), std::less<string>());
-    printDeque(d_ascending, "Sorted ascending");
-    cout << endl;
 
-    cout << "Task 6: Sort deque in descending order" << endl;
-    deque<string> d_descending = d;
+    deque<string> words_ascending = words;
+
+    // Можна використати вже готовий компаратор std::less || std::greater або написати власний
+
     // sort(d_descending.begin(), d_descending.end(), [](const string& a, const string& b) {
     //     return a > b;
     // });
-    sort(d_descending.begin(), d_descending.end(), std::greater<string>());
-    printDeque(d_descending, "Sorted descending");
+
+    sort(words_ascending.begin(), words_ascending.end(), less<string>());
+
+    print_deque(words_ascending, "Sorted ascending");
+    cout << endl;
+
+    cout << "Task 6: Sort deque in descending order" << endl;
+
+    deque<string> words_descending = words;
+
+    sort(words_descending.begin(), words_descending.end(), greater<string>());
+
+    print_deque(words_descending, "Sorted ascending");
     cout << endl;
 
     cout << "Task 7: Sort by length (ascending), then alphabetically" << endl;
-    deque<string> d_length_sorted = d;
-    sort(d_length_sorted.begin(), d_length_sorted.end(), [](const string& a, const string& b) {
-        if (a.length() != b.length()) {
-            return a.length() < b.length();
-        }
-        return a < b;
+    deque<string> sorted_by_word_length = words;
+
+    sort(sorted_by_word_length.begin(), sorted_by_word_length.end(), [](const string& a, const string& b) {
+        if(a.length() == b.length())
+            return a < b;
+        return a.length() < b.length();
     });
-    printDeque(d_length_sorted, "Sorted by length");
-    cout << endl;
 
     cout << "Task 8: Sort the list (from task 4) in ascending order" << endl;
-    dequeToList.sort();
-    printList(dequeToList, "List sorted");
+
+    deque_to_list.sort();
+    print_list(deque_to_list, "List sorted");
+
     cout << endl;
 
     cout << "Task 9: Remove words containing a given letter from the list" << endl;
-    char letterToRemove;
+
+    char letter_to_remove;
     cout << "Enter a letter to remove words containing it: ";
-    cin >> letterToRemove;
-    
-    dequeToList.remove_if([letterToRemove](const string& word) {
-        return word.find(letterToRemove) != string::npos;
+    cin >> letter_to_remove;
+
+    deque_to_list.remove_if([letter_to_remove](const string& word) {
+        return word.contains(letter_to_remove);
     });
-    
-    printList(dequeToList, "List after removal");
+
+    print_list(deque_to_list, "List after removal");
     cout << endl;
 
     cout << "Task 10: Convert all words in the list to uppercase" << endl;
-    for (auto& word : dequeToList) {
+
+    for_each(deque_to_list.begin(), deque_to_list.end(), [](string& word) {
         transform(word.begin(), word.end(), word.begin(), [](char c) {
             return toupper(c);
         });
-    }
-    printList(dequeToList, "List in uppercase");
+    });
+
+    // За допомогою ranges
+    // std::ranges::for_each(deque_to_list, [](std::string& word) {
+    //     std::ranges::transform(word, word.begin(), 
+    //                           [](unsigned char c) { return std::toupper(c); });
+    // });
+
+    print_list(deque_to_list, "List in uppercase");
     cout << endl;
-
-    cout << "=== All tasks completed ===" << endl;
-
+    
     return 0;
 }
