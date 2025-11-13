@@ -41,7 +41,7 @@ void testMaxSpeedInConstructor() {
         Auto car("AB1234CD", 100, 400); // maxSpeed > 360
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const WrongMaxSpeedException& ex) {
-        cout << "[УСПІШНО] Викинуто WrongMaxSpeedException: " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто WrongMaxSpeedException: " << ex.what() << endl;
     } catch (...) {
         cout << "Помилка: викинуто неочікуваний тип винятку!" << endl;
     }
@@ -54,7 +54,7 @@ void testSpeedExceedsMaxInConstructor() {
         Auto car("AB1234CD", 250, 200); // speed > maxSpeed
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const WrongSpeedException& ex) {
-        cout << "[УСПІШНО] Викинуто WrongSpeedException: " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто WrongSpeedException: " << ex.what() << endl;
     } catch (...) {
         cout << "Помилка: викинуто неочікуваний тип винятку!" << endl;
     }
@@ -69,7 +69,7 @@ void testInvalidNumberInConstructor() {
         Auto car("AB123CD", 100, 200); // 7 символів замість 8
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const InvalidNumberException& ex) {
-        cout << "[УСПІШНО] Викинуто InvalidNumberException (довжина): " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто InvalidNumberException (довжина): " << ex.what() << endl;
     }
     
     // Тест 3.2: Малі літери замість великих
@@ -77,7 +77,7 @@ void testInvalidNumberInConstructor() {
         Auto car("ab1234CD", 100, 200);
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const InvalidNumberException& ex) {
-        cout << "[УСПІШНО] Викинуто InvalidNumberException (малі літери): " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто InvalidNumberException (малі літери): " << ex.what() << endl;
     }
     
     // Тест 3.3: Літери замість цифр
@@ -85,7 +85,7 @@ void testInvalidNumberInConstructor() {
         Auto car("ABCD34CD", 100, 200);
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const InvalidNumberException& ex) {
-        cout << "[УСПІШНО] Викинуто InvalidNumberException (літери в номері): " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто InvalidNumberException (літери в номері): " << ex.what() << endl;
     }
     
     // Тест 3.4: Цифри замість літер
@@ -93,7 +93,7 @@ void testInvalidNumberInConstructor() {
         Auto car("AB123456", 100, 200);
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const InvalidNumberException& ex) {
-        cout << "[УСПІШНО] Викинуто InvalidNumberException (цифри в кінці): " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто InvalidNumberException (цифри в кінці): " << ex.what() << endl;
     }
 }
 
@@ -109,7 +109,7 @@ void testSetMaxSpeed() {
         car.setMaxSpeed(400);
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const WrongMaxSpeedException& ex) {
-        cout << "[УСПІШНО] Викинуто WrongMaxSpeedException: " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто WrongMaxSpeedException: " << ex.what() << endl;
     }
     
     try {
@@ -118,7 +118,7 @@ void testSetMaxSpeed() {
         car.setMaxSpeed(100); // поточна швидкість 150 > нова maxSpeed 100
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const WrongSpeedException& ex) {
-        cout << "[УСПІШНО] Викинуто WrongSpeedException: " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто WrongSpeedException: " << ex.what() << endl;
     }
 }
 
@@ -134,7 +134,7 @@ void testSetSpeed() {
         car.setSpeed(250);
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const WrongSpeedException& ex) {
-        cout << "[УСПІШНО] Викинуто WrongSpeedException: " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто WrongSpeedException: " << ex.what() << endl;
     }
 }
 
@@ -151,7 +151,7 @@ void testIncreaseSpeed() {
         car.increaseSpeed(10);
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const WrongSpeedException& ex) {
-        cout << "[УСПІШНО] Викинуто WrongSpeedException: " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто WrongSpeedException: " << ex.what() << endl;
     }
 }
 
@@ -167,7 +167,7 @@ void testSetNumber() {
         car.setNumber("123456AB");
         cout << "Помилка: виняток не було викинуто!" << endl;
     } catch (const InvalidNumberException& ex) {
-        cout << "[УСПІШНО] Викинуто InvalidNumberException: " << ex.getErrMsg() << endl;
+        cout << "[УСПІШНО] Викинуто InvalidNumberException: " << ex.what() << endl;
     }
 }
 

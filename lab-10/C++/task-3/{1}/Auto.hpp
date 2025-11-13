@@ -46,7 +46,7 @@ class Auto {
     const string& getNumber() const { return number; }
     void setNumber(const string& value) {
         if (!isValidNumber(value)) {
-            throw InvalidNumberException("Невірний формат номера. Очікується формат: AB1234CD", value);
+            throw InvalidNumberException("Невірний формат номера. Очікується формат: AB1234CD");
         }
         this->number = value;
     }
@@ -54,7 +54,7 @@ class Auto {
     int getSpeed() const { return speed; }
     void setSpeed(int value) {
         if (value > maxSpeed) {
-            throw WrongSpeedException("Швидкість не може перевищувати максимальну швидкість", value);
+            throw WrongSpeedException("Швидкість не може перевищувати максимальну швидкість");
         }
         this->speed = value;
     }
@@ -62,11 +62,11 @@ class Auto {
     int getMaxSpeed() const { return maxSpeed; }
     void setMaxSpeed(int value) {
         if (value > MAX_ALLOWED_SPEED) {
-            throw WrongMaxSpeedException("Максимальна швидкість не може перевищувати 360 км/год", value);
+            throw WrongMaxSpeedException("Максимальна швидкість не може перевищувати 360 км/год");
         }
         
         if (speed > value) {
-            throw WrongSpeedException("Поточна швидкість перевищує нову максимальну швидкість", speed);
+            throw WrongSpeedException("Поточна швидкість перевищує нову максимальну швидкість");
         }
         
         this->maxSpeed = value;
@@ -75,7 +75,7 @@ class Auto {
     void increaseSpeed(int value = 5) {
         int newSpeed = this->speed + value;
         if (newSpeed > maxSpeed) {
-            throw WrongSpeedException("Збільшення швидкості призведе до перевищення максимальної швидкості", newSpeed);
+            throw WrongSpeedException("Збільшення швидкості призведе до перевищення максимальної швидкості");
         }
         this->speed = newSpeed;
     }

@@ -17,7 +17,7 @@ int main()
             double area = processArea(a, b, c);
             cout << "Площа трикутника: " << area << endl << endl;
             
-        } catch (const char* ex) {
+        } catch (int ex) {
             cout << "[ПОМИЛКА]: " << ex << endl << endl;
         }
     }

@@ -127,6 +127,13 @@ void testMatrixTemplate() {
     cout << "Modified string matrix:" << endl;
     cout << stringMatrix1;
     cout << endl;
+    
+    stringMatrix1.getSum();
+
+    stringMatrix1 += string("Jdsajkkdskda");
+    cout << "Modified string matrix:" << endl;
+    cout << stringMatrix1;
+    cout << endl;
   
     Matrix<string, 2, 2> stringMatrix2("!");
     Matrix<string, 2, 2> stringMatrix3 = stringMatrix1 + stringMatrix2;

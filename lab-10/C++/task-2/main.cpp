@@ -22,9 +22,9 @@ int main()
             cout << "Площа трикутника: " << area << endl << endl;
             
         } catch (const WrongSideError& ex) {
-            cout << "[ПОМИЛКА - " << typeid(ex).name() << "]:" << ex.getErrMsg() << endl << endl;
+            cout << "[ПОМИЛКА - " << typeid(ex).name() << "]:" << ex.what() << endl << endl;
         } catch (const WrongTrianError& ex) {
-            cout << "[ПОМИЛКА - " << typeid(ex).name() << "]:" << ex.getErrMsg() << endl << endl;
+            cout << "[ПОМИЛКА - " << typeid(ex).name() << "]:" << ex.what() << endl << endl;
         } catch (exception ex) {}
     }
     

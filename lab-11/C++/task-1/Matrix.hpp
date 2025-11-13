@@ -15,7 +15,7 @@ private:
   void allocate() {
     arr = new T*[row];
     for (int r = 0; r < row; r++) {
-      arr[r] = new T*[col]();
+      arr[r] = new T[col]();
     }
   }
 
@@ -68,7 +68,7 @@ public:
   }
 
   T getSum() const {
-    T sum = 0;
+    T sum = T{};
     for (int r = 0; r < row; r++) {
       for (int c = 0; c < col; c++) {
         sum += arr[r][c];

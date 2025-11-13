@@ -3,12 +3,10 @@
 #include <stdexcept>
 #include <string>
 
-#include "BaseException.hpp"
-
 using namespace std;
 
-class InvalidNumberException : public BaseException<string>, public invalid_argument {
+class InvalidNumberException : public invalid_argument {
 public:
-  InvalidNumberException(const string &message, const string &invalidData)
-      : BaseException(message, invalidData), invalid_argument(message) {}
+  InvalidNumberException(const string &message)
+      : invalid_argument(message) {}
 };

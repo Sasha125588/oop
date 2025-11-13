@@ -154,9 +154,13 @@ int main() {
     cout << "Enter a letter to remove words containing it: ";
     cin >> letter_to_remove;
 
-    deque_to_list.remove_if([letter_to_remove](const string& word) {
+    auto remove_it = remove_if(deque_to_list.begin(), deque_to_list.end(), [letter_to_remove](const string& word) {
         return word.contains(letter_to_remove);
     });
+
+    if(remove_it != deque_to_list.end()) {
+        cout << "dsda;s";
+    }
 
     print_list(deque_to_list, "List after removal");
     cout << endl;
